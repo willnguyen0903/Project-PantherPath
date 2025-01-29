@@ -1,0 +1,76 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #62C1E8, #2358B5);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Centering content */
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6vh; /* spacing between elements */
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Responsive logo */
+.logo {
+    width: 45vw;
+    max-width: 350px;
+    height: auto;
+}
+
+/* Bigger Button Styles */
+.btn {
+    background-color: #003c8f;
+    color: white;
+    font-size: 1.5rem; /* Increased font size */
+    padding: 18px 0; /* Increased padding */
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 90%; /* Make buttons wider */
+    max-width: 300px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+    transition: 0.3s ease-in-out;
+}
+
+/* Button hover effect */
+.btn:hover {
+    background-color: #002f6c;
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+
+
+
+
+
+
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .btn {
+        font-size: 1.3rem; /* Slightly smaller font for small screens */
+        padding: 16px 0;
+        max-width: 280px;
+    }
+
+    .logo {
+        width: 50vw;
+    }
+}
