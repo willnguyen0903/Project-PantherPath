@@ -1,0 +1,12 @@
+.header {
+    background-color: blue;
+    padding: 20px;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px; /* Adjust as needed */
+}
