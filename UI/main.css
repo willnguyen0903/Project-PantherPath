@@ -1,12 +1,114 @@
-.header {
-    background-color: blue;
-    padding: 50px;
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('gsu.jpg') center/cover no-repeat;
     position: relative;
 }
 
-.logo {
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(0, 0, 255, 0.7));
+}
+
+.header {
     position: absolute;
     top: 10px;
-    left: 10px;
-    width: 100px; /* Adjust as needed */
+    left: 10px; 
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.logo {
+    height: 100px; 
+}
+
+.nav-links {
+    display: flex;
+    gap: 50px; 
+    justify-content: flex-end; 
+    position: absolute;
+    right: 70px; 
+    top: 20px;
+}
+
+.nav-links a {
+    color: rgb(232, 147, 12); 
+    text-decoration: none;
+    font-size: 18px; 
+}
+
+.content {
+    position: relative;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    gap: 20px; 
+}
+
+.heading-container {
+    margin-bottom: 20px; 
+    margin-top: -100px; 
+}
+
+.heading {
+    font-size: 50px; 
+    animation: fadeInUp 1s ease-in-out; 
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+
+.custom-button {
+    background-color: blue; 
+    color: white; 
+    border: none;
+    width: 200px; 
+    height: 50px; 
+    font-size: 18px; 
+    border-radius: 10px; 
+    cursor: pointer;
+    animation: fadeInUp 1s ease-in-out; 
+    animation-delay: 0.5s; 
+    transition: transform 0.3s ease, color 0.3s ease; 
+}
+
+.custom-button:hover {
+    transform: translateY(-5px); 
+    color: orange; 
 }
