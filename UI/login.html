@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Panther-Path</title>
+    <title>Log in Panther-Path</title>
     <link rel="stylesheet" href="login_styles.css">
 </head>
 <body>
@@ -25,7 +25,13 @@
                 <label for="remember">Remember me</label>
             </div>
 
-            <button type="submit" class="btn">Login</button>
+            <button id='login-btn' type="submit" class="btn">Login</button>
+
+            <script type="text/javascript">
+                document.getElementById("login-btn").onclick = function () {
+                    location.href = "mainScreen.html";
+                };
+            </script>
 
             <p class="signup-link">Don't have an account? <a href="signup.html">Sign up</a></p>
         </form>

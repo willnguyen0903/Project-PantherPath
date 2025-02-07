@@ -10,8 +10,7 @@
     <div class="header">
         <img src="logo.png" alt="PantherPath Logo" class="logo">
         <div class="nav-links">
-            <a href="login.html">Login</a>
-            <a href="signup.html">Sign Up</a>
+            <a href="login.html">Logout</a>
         </div>
     </div>
     <div class="content">
@@ -20,8 +19,21 @@
                 <h1 class="heading">Commute with Confidence</h1>
             </div>
             <div class="buttons-container">
-                <button class="custom-button">Traveling</button>
-                <button class="custom-button">Parking Status</button>
+                <button id='traveling-btn' class="custom-button">Traveling</button>
+
+                <script type="text/javascript">
+                    document.getElementById("traveling-btn").onclick = function () {
+                        location.href = "traveling.html";
+                    };
+                </script>
+
+                <button id='parking-btn' class="custom-button">Parking Status</button>
+
+                <script type="text/javascript">
+                    document.getElementById("parking-btn").onclick = function () {
+                        location.href = "parking_status.html";
+                    };
+                </script>
             </div>
         </div>
     </div>
