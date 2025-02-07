@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traffic Status Page - Panther-Path</title>
+    <link rel="stylesheet" href="parking_status.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Back Button -->
+      <div class="header">
+        <button class="back-button" onclick="history.back()">
+          &#8592; Back
+        </button>
+      </div>
+
+      <!-- Parking Status Section -->
+      <div class="status-container">
+        <div class="full deck">
+          <strong>T Deck</strong><br />
+          Status: Full<br />
+          Spot(s) left: 0
+        </div>
+        <div class="crowded deck">
+          <strong>G Deck</strong><br />
+          Status: Crowded<br />
+          Spot(s) left: 10
+        </div>
+        <div class="available deck">
+          <strong>N Deck</strong><br />
+          Status: Available<br />
+          Spot(s) left: 50
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
