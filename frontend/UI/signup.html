@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Panther-Path</title>
+    <link rel="stylesheet" href="login_styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo -->
+        <img src="logo.png" alt="Panther-Path Logo" class="logo">
+
+        <!-- Registration Form -->
+        <form class="form" id="registerForm">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="btn">Sign Up</button>
+
+            <p class="signup-link">Already have an account? <a href="login.html">Log in</a></p>
+        </form>
+
+        <p id="message"></p> <!-- Message Display -->
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            // Send data to the backend
+            try {
+                const response = await fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await response.json();
+                document.getElementById('message').innerText = data.message;
+
+                if (response.ok) {
+                    setTimeout(() => { window.location.href = "login.html"; }, 1000); // Redirect to login page
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('message').innerText = "Registration failed!";
+            }
+        });
+    </script>
+
+</body>
+</html>

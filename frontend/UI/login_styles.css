@@ -1,0 +1,122 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Background and Layout */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #62C1E8, #2358B5);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Centering Container */
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6vh;
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Logo Styling */
+.logo {
+    width: 45vw;
+    max-width: 300px;
+    height: auto;
+}
+
+/* Form Styling */
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    font-size: 1rem;
+    color: white;
+    text-align: left;
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 2px solid white;
+    background: transparent;
+    color: white;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Remember Me */
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.remember-me input {
+    width: 16px;
+    height: 16px;
+}
+
+/* Button */
+.btn {
+    background-color: #003c8f;
+    color: white;
+    font-size: 1.5rem;
+    padding: 18px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+    transition: 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #002f6c;
+    transform: scale(1.05);
+}
+
+/* Signup Link */
+.signup-link {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.signup-link a {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .btn {
+        font-size: 1.3rem;
+        padding: 16px 0;
+    }
+
+    .logo {
+        width: 50vw;
+    }
+}

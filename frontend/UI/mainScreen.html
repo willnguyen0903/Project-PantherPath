@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PantherPath</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="PantherPath Logo" class="logo">
+        <div class="nav-links">
+            <a href="login.html">Logout</a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="main-content">
+            <div class="heading-container">
+                <h1 class="heading">Commute with Confidence</h1>
+            </div>
+            <div class="buttons-container">
+                <button id='traveling-btn' class="custom-button">Traveling</button>
+
+                <script type="text/javascript">
+                    document.getElementById("traveling-btn").onclick = function () {
+                        location.href = "travel_options.html";
+                    };
+                </script>
+
+                <button id='parking-btn' class="custom-button">Parking Status</button>
+
+                <script type="text/javascript">
+                    document.getElementById("parking-btn").onclick = function () {
+                        location.href = "parking_status.html";
+                    };
+                </script>
+
+                <button id='saved-route-btn' class="custom-button">Saved Routes</button>
+
+                <script type="text/javascript">
+                    document.getElementById("saved-route-btn").onclick = function () {
+                        location.href = "saved_route.html";
+                    };
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
