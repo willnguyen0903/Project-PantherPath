@@ -40,7 +40,7 @@
             const password = document.getElementById('password').value;
             // Send data to the backend
             try {
-                const response = await fetch('postgresql://pantherpath_db_user:gvhDzTywgd3XgLl3J9KjOGhRlzu1agFf@dpg-cusj2ffnoe9s738vm4tg-a.oregon-postgres.render.com/pantherpath_db', {
+                const response = await fetch('https://project-pantherpath.onrender.com', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, email, password })
