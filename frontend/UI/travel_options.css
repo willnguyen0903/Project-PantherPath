@@ -63,6 +63,11 @@ body {
     display: flex;
     flex-direction: column;
     box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .option:hover {
+    transform: scale(1.05);
   }
 
   .row{
