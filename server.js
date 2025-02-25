@@ -31,7 +31,7 @@ app.post('/register', async (req, res) => {
         res.json({ message: "User registered successfully!", userId: result.rows[0].user_id });
     } catch (error) {
         console.error("Error inserting user:", error);
-        res.status(500).json({ message: "Register Failed: Email Taken" });
+        res.status(500).json({ message: "Register Failed: Try different email" });
     }
 });
 
