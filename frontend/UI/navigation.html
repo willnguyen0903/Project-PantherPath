@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PantherPath Navigation</title>
+    <link rel="stylesheet" href="navigation.css" />
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=API_KEY_HERE&libraries=places&callback=initMap"
+      async
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PantherPath Navigation</h1>
+      <form id="navigation-form">
+        <label for="start">Starting Destination:</label>
+        <input
+          type="text"
+          id="start"
+          placeholder="Enter starting location"
+          required
+        />
+
+        <label for="mode">Mode of Travel:</label>
+        <select id="mode" required>
+          <option value="DRIVING">Driving</option>
+          <option value="WALKING">Walking</option>
+          <option value="BICYCLING">Bicycling</option>
+          <option value="TRANSIT">Transit</option>
+        </select>
+
+        <label for="end">End Destination:</label>
+        <select id="end" required>
+          <option value="95 Decatur St SE, Atlanta, GA 30303">
+            Classroom South
+          </option>
+          <option value="38 Peachtree Center Ave SE, Atlanta, GA 30303">
+            Langdale Hall
+          </option>
+        </select>
+
+        <button type="submit">Get Directions</button>
+      </form>
+
+      <div id="map"></div>
+      <div id="directions-panel"></div>
+    </div>
+
+    <script src="../../backend/navigation.js"></script>
+  </body>
+</html>
