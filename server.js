@@ -25,10 +25,10 @@ app.post('/register', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await pool.query(
-            "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING user_id",
+            "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING uid",
             [username, email, hashedPassword]
         );
-        res.json({ message: "User registered successfully!", userId: result.rows[0].user_id });
+        res.json({ message: "User registered successfully!", uid: result.rows[0].uid });
     } catch (error) {
         console.error("Error inserting user:", error);
         res.status(500).json({ message: "Register Failed: Try different email" });
@@ -57,7 +57,7 @@ app.post('/login', async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        res.json({ message: "Login successful!", userId: user.user_id });
+        res.json({ message: "Login successful!", uid: user.uid });
     } catch (error) {
         console.error("Login error:", error);
         res.status(500).json({ message: "Database error" });
