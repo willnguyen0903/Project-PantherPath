@@ -70,6 +70,11 @@ body {
   flex-direction: column;
   gap: 6px;
   box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.deck:hover {
+  transform: scale(1.05);
 }
 
 /* Mobile Responsiveness */
