@@ -3,6 +3,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 const cors = require('cors');
+const jwt = require('jsonwebtoken'); 
 
 const app = express();
 app.use(express.json());
@@ -36,6 +37,8 @@ app.post('/register', async (req, res) => {
 });
 
 // User Login Route
+
+
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -57,10 +60,43 @@ app.post('/login', async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        res.json({ message: "Login successful!", uid: user.uid });
+        // Generate JWT Token
+        const token = jwt.sign({ userId: user.user_id }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRES_IN
+        });
+
+        res.json({ message: "Login successful!", token });
     } catch (error) {
         console.error("Login error:", error);
         res.status(500).json({ message: "Database error" });
+    }
+});
+
+// JWT Middleware for Protected Routes
+const authenticateToken = (req, res, next) => {
+    const token = req.header('Authorization')?.split(' ')[1]; // Extract token from "Bearer TOKEN"
+    
+    if (!token) {
+        return res.status(403).json({ message: "Access denied. No token provided." });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || "default_secret");
+        req.user = decoded;
+        next();
+    } catch (error) {
+        res.status(401).json({ message: "Invalid token." });
+    }
+};
+
+// Protected Route Example
+app.get('/profile', authenticateToken, async (req, res) => {
+    try {
+        const result = await pool.query("SELECT uid, username, email FROM users WHERE uid = $1", [req.user.uid]);
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error("Profile fetch error:", error);
+        res.status(500).json({ message: "Error fetching profile" });
     }
 });
 
