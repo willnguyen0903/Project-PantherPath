@@ -28,10 +28,17 @@
           <option value="DRIVING">Driving</option>
           <option value="WALKING">Walking</option>
           <option value="BICYCLING">Bicycling</option>
-          <option value="TRANSIT">Transit</option>
         </select>
 
-        <label for="end">End Destination:</label>
+        <!-- Add Stop Button -->
+        <button type="button" id="add-stop">Add Stop</button>
+
+        <!-- Stops Container -->
+        <div id="stops-container">
+          <!-- Additional stops will be added here -->
+        </div>
+
+        <label for="end">Ending Destination:</label>
         <select id="end" required>
           <option value="95 Decatur St SE, Atlanta, GA 30303">
             Classroom South
@@ -47,6 +54,65 @@
       <div id="map"></div>
       <div id="directions-panel"></div>
     </div>
+
+    <script>
+      // JavaScript for adding stops dynamically
+      document.getElementById("add-stop").addEventListener("click", () => {
+        const stopsContainer = document.getElementById("stops-container");
+        const stopCount = stopsContainer.children.length + 1;
+
+        // Create a new stop
+        const newStop = document.createElement("div");
+        newStop.className = "stop";
+        newStop.innerHTML = `
+          <label for="stop${stopCount}">Stop ${stopCount}:</label>
+          <input
+            type="text"
+            id="stop${stopCount}"
+            placeholder="Enter stop location"
+            required
+          />
+
+          <label for="mode${stopCount + 1}">Follow-Up Mode of Travel:</label>
+          <select id="mode${stopCount + 1}" class="mode-select" required>
+            <option value="DRIVING">Driving</option>
+            <option value="WALKING">Walking</option>
+            <option value="BICYCLING">Bicycling</option>
+            <option value="TRANSIT">MARTA</option>
+          </select>
+
+          <!-- MARTA Station Selection (hidden by default) -->
+          <div id="marta-station${stopCount}" class="marta-station" style="display: none;">
+            <label for="marta-station-select${stopCount}">MARTA Station:</label>
+            <select id="marta-station-select${stopCount}">
+              <option value="Five Points Station">Five Points Station</option>
+              <option value="Peachtree Center Station">Peachtree Center Station</option>
+              <option value="Georgia State Station">Georgia State Station</option>
+            </select>
+
+            <label for="final-mode${stopCount}">Final Mode of Travel:</label>
+            <select id="final-mode${stopCount}">
+              <option value="WALKING">Walking</option>
+              <option value="BICYCLING">Bicycling</option>
+            </select>
+          </div>
+        `;
+
+        // Append the new stop to the container
+        stopsContainer.appendChild(newStop);
+
+        // Add event listener for MARTA selection
+        const modeSelect = newStop.querySelector(".mode-select");
+        modeSelect.addEventListener("change", (event) => {
+          const martaStationDiv = newStop.querySelector(".marta-station");
+          if (event.target.value === "TRANSIT") {
+            martaStationDiv.style.display = "block"; // Show MARTA station selection
+          } else {
+            martaStationDiv.style.display = "none"; // Hide MARTA station selection
+          }
+        });
+      });
+    </script>
 
     <script src="../../backend/navigation.js"></script>
   </body>
