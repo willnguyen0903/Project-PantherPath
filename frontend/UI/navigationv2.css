@@ -1,38 +1,34 @@
-/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Background and Layout */
 body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Align items to the top */
+  align-items: flex-start;
   background: linear-gradient(to bottom, #62c1e8, #2358b5);
   font-family: "Arial", sans-serif;
-  padding: 20px; /* Add padding to ensure content doesn't touch the edges */
-  overflow-y: auto; /* Ensure the page is scrollable */
+  padding: 20px;
+  overflow-y: auto;
 }
 
-/* Centering Container */
 .container {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* Reduced gap for better spacing */
+  gap: 20px;
   width: 90%;
-  max-width: 600px; /* Increased max-width for better layout */
+  max-width: 600px;
   background: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Form Styling */
 form {
   width: 100%;
   display: flex;
@@ -139,17 +135,18 @@ button[type="submit"]:hover {
   box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Google Maps Link Container */
 .link-container {
   margin-top: 20px;
   padding: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: firebrick;
   border-radius: 8px;
   box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
 
 .link-container a {
-  color: #003c8f;
+  color: white;
   font-size: 1.2rem;
   font-weight: bold;
   text-decoration: none;

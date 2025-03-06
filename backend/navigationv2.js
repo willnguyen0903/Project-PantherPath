@@ -40,7 +40,7 @@ function initMap() {
 // Load the Google Maps API script
 function loadGoogleMapsScript() {
   const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=API_KEY_HERE&callback=initMap`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCshta0wk-KdGcS79W3n68hFte-aKb4rhg&callback=initMap`;
   script.async = true;
   document.head.appendChild(script);
 }
@@ -56,9 +56,19 @@ function calculateAndDisplayRoute() {
   console.log("End:", end); // Debugging log
   const waypoints = [];
 
-  // Collect waypoints based on user input
+  // Determine the travel mode based on user input
+  let travelMode = google.maps.TravelMode.DRIVING; // Default mode
   const transport = document.getElementById("transport").value;
 
+  if (transport === "Walking") {
+    travelMode = google.maps.TravelMode.WALKING;
+  } else if (transport === "Bicycling") {
+    travelMode = google.maps.TravelMode.BICYCLING;
+  } else if (transport === "Transit") {
+    travelMode = google.maps.TravelMode.TRANSIT;
+  }
+
+  // Collect waypoints based on user input
   if (transport === "Driving") {
     const drivingType = document.querySelector(
       'input[name="drivingType"]:checked'
@@ -93,7 +103,7 @@ function calculateAndDisplayRoute() {
       origin: start,
       destination: end,
       waypoints: waypoints,
-      travelMode: google.maps.TravelMode.DRIVING, // Default mode (can be adjusted based on user input)
+      travelMode: travelMode, // Use the correct travel mode
     },
     (response, status) => {
       if (status === "OK") {
@@ -101,8 +111,13 @@ function calculateAndDisplayRoute() {
         directionsRenderer.setDirections(response);
 
         // Generate a Google Maps link
-        const googleMapsLink = generateGoogleMapsLink(start, end, waypoints);
-        console.log("Google Maps Link:", googleMapsLink);
+        const googleMapsLink = generateGoogleMapsLink(
+          start,
+          end,
+          waypoints,
+          travelMode
+        );
+        console.log("Google Maps Link:", googleMapsLink); // Debugging log
         displayGoogleMapsLink(googleMapsLink);
       } else {
         console.error("Directions request failed due to " + status);
@@ -115,7 +130,7 @@ function calculateAndDisplayRoute() {
 }
 
 // Generate a Google Maps link
-function generateGoogleMapsLink(start, end, waypoints) {
+function generateGoogleMapsLink(start, end, waypoints, travelMode) {
   const waypointsParam = waypoints
     .map((waypoint) => waypoint.location)
     .join("|");
@@ -123,7 +138,7 @@ function generateGoogleMapsLink(start, end, waypoints) {
     start
   )}&destination=${encodeURIComponent(end)}&waypoints=${encodeURIComponent(
     waypointsParam
-  )}&travelmode=driving`;
+  )}&travelmode=${travelMode.toLowerCase()}`;
 }
 
 function displayGoogleMapsLink(link) {
