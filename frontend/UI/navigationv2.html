@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Commute Form</title>
+    <title>PantherPath Navigation</title>
+    <link rel="stylesheet" href="navigationv2.css" />
     <script>
       function updateForm() {
         var transport = document.getElementById("transport").value;
@@ -55,171 +56,198 @@
     </script>
   </head>
   <body onload="updateForm()">
-    <form>
-      <label for="startTime">Commute Start Time:</label>
-      <input type="time" id="startTime" name="startTime" />
-      <br /><br />
+    <div class="container">
+      <form onsubmit="event.preventDefault(); calculateAndDisplayRoute();">
+        <h1>PantherPath Navigation</h1>
+        <label for="startTime">Commute Start Time:</label>
+        <input type="time" id="startTime" name="startTime" />
+        <br /><br />
 
-      <label for="transport">Initial Mode of Transport:</label>
-      <select id="transport" name="transport" onchange="updateForm()">
-        <option value="">--Select--</option>
-        <option value="Driving">Driving</option>
-        <option value="Walking">Walking</option>
-        <option value="Marta">Marta</option>
-      </select>
-      <br /><br />
-
-      <div id="drivingOptions" style="display: none">
-        <label>Take Highways?</label>
-        <input type="radio" name="highway" value="Yes" /> Yes
-        <input type="radio" name="highway" value="No" /> No <br /><br />
-
-        <label>I am:</label>
-        <input
-          type="radio"
-          name="drivingType"
-          value="ParkingDeck"
-          onchange="updateDrivingOptions()"
-        />
-        Driving to a Parking Deck
-        <input
-          type="radio"
-          name="drivingType"
-          value="MartaStation"
-          onchange="updateDrivingOptions()"
-        />
-        Driving to a Marta Station <br /><br />
-      </div>
-
-      <div id="martaOptions" style="display: none">
-        <label for="martaStationPark"
-          >Which Marta Station are you starting at:</label
-        >
-        <select id="martaStationPark" name="martaStationPark">
-          <option value="Doraville">Doraville Marta</option>
-          <option value="Dunwoody">Dunwoody Marta</option>
+        <label for="transport">Initial Mode of Transport:</label>
+        <select id="transport" name="transport" onchange="updateForm()">
+          <option value="">--Select--</option>
+          <option value="Driving">Driving</option>
+          <option value="Walking">Walking</option>
+          <option value="Marta">Marta</option>
         </select>
         <br /><br />
 
-        <label for="martaStationExit"
-          >Which Marta Station are you exiting at:</label
-        >
-        <select id="martaStationExit" name="martaStationExit">
-          <option value="Five Points">Five Points Marta</option>
-          <option value="Peachtree Center">Peachtree Center Marta</option>
-        </select>
-        <br /><br />
+        <div id="drivingOptions" style="display: none">
+          <label>Take Highways?</label>
+          <input type="radio" name="highway" value="Yes" /> Yes
+          <input type="radio" name="highway" value="No" /> No <br /><br />
 
-        <label for="finalDestination">Final Destination:</label>
-        <select id="finalDestination" name="finalDestination">
-          <option value="ClassroomSouth">Classroom South</option>
-          <option value="LangdaleHall">Langdale Hall</option>
-        </select>
-      </div>
+          <label>I am:</label>
+          <input
+            type="radio"
+            name="drivingType"
+            value="ParkingDeck"
+            onchange="updateDrivingOptions()"
+          />
+          Driving to a Parking Deck
+          <input
+            type="radio"
+            name="drivingType"
+            value="MartaStation"
+            onchange="updateDrivingOptions()"
+          />
+          Driving to a Marta Station <br /><br />
+        </div>
 
-      <div id="walkingOptions" style="display: none">
-        <label>I am:</label>
-        <input
-          type="radio"
-          name="walkingType"
-          value="Campus"
-          onchange="updateWalkingOptions()"
-        />
-        Walking directly to Campus
-        <input
-          type="radio"
-          name="walkingType"
-          value="MartaStation"
-          onchange="updateWalkingOptions()"
-        />
-        Walking to a Marta Station <br /><br />
+        <div id="martaOptions" style="display: none">
+          <label for="martaStationPark"
+            >Which Marta Station are you starting at:</label
+          >
+          <select id="martaStationPark" name="martaStationPark">
+            <option value="6000 New Peachtree Rd, Doraville, GA 30340">
+              Doraville Marta
+            </option>
+            <option value="Dunwoody">Dunwoody Marta</option>
+          </select>
+          <br /><br />
 
-        <div id="finalDestinationContainer" style="display: none">
+          <label for="martaStationExit"
+            >Which Marta Station are you exiting at:</label
+          >
+          <select id="martaStationExit" name="martaStationExit">
+            <option value="30 Alabama St SW, Atlanta, GA 30303">
+              Five Points Marta
+            </option>
+            <option value="Peachtree Center">Peachtree Center Marta</option>
+          </select>
+          <br /><br />
+
           <label for="finalDestination">Final Destination:</label>
           <select id="finalDestination" name="finalDestination">
-            <option value="ClassroomSouth">Classroom South</option>
+            <option value="95 Decatur St. SE, Atlanta, GA 30303">
+              Classroom South
+            </option>
             <option value="LangdaleHall">Langdale Hall</option>
           </select>
         </div>
-      </div>
 
-      <div id="parkingDeckOptions" style="display: none">
-        <label for="startDestination">Start Destination:</label>
-        <input type="text" id="startDestination" name="startDestination" />
-        <br /><br />
+        <div id="walkingOptions" style="display: none">
+          <label>I am:</label>
+          <input
+            type="radio"
+            name="walkingType"
+            value="Campus"
+            onchange="updateWalkingOptions()"
+          />
+          Walking directly to Campus
+          <input
+            type="radio"
+            name="walkingType"
+            value="MartaStation"
+            onchange="updateWalkingOptions()"
+          />
+          Walking to a Marta Station <br /><br />
 
-        <label>Auto-fill Closest Parking Deck?</label>
-        <input type="radio" name="autoFill" value="Yes" /> Yes
-        <input type="radio" name="autoFill" value="No" /> No <br /><br />
+          <div id="finalDestinationContainer" style="display: none">
+            <label for="finalDestination">Final Destination:</label>
+            <select id="finalDestination" name="finalDestination">
+              <option value="95 Decatur St. SE, Atlanta, GA 30303">
+                Classroom South
+              </option>
+              <option value="LangdaleHall">Langdale Hall</option>
+            </select>
+          </div>
+        </div>
 
-        <label for="parkingDeck">Which Parking Deck:</label>
-        <select id="parkingDeck" name="parkingDeck">
-          <option value="Purple">Purple Parking Deck</option>
-          <option value="Green">Green Parking Deck</option>
-        </select>
-        <br /><br />
+        <div id="parkingDeckOptions" style="display: none">
+          <label for="startDestination">Start Destination:</label>
+          <input type="text" id="startDestination" name="startDestination" />
+          <br /><br />
 
-        <label for="finalDestination">Final Destination:</label>
-        <select id="finalDestination" name="finalDestination">
-          <option value="ClassroomSouth">Classroom South</option>
-          <option value="LangdaleHall">Langdale Hall</option>
-        </select>
-      </div>
+          <label>Auto-fill Closest Parking Deck?</label>
+          <input type="radio" name="autoFill" value="Yes" /> Yes
+          <input type="radio" name="autoFill" value="No" /> No <br /><br />
 
-      <div id="martaStationOptions" style="display: none">
-        <label for="startDestination">Start Destination:</label>
-        <input type="text" id="startDestination" name="startDestination" />
-        <br /><br />
+          <label for="parkingDeck">Which Parking Deck:</label>
+          <select id="parkingDeck" name="parkingDeck">
+            <option value="Purple">Purple Parking Deck</option>
+            <option value="Green">Green Parking Deck</option>
+          </select>
+          <br /><br />
 
-        <label>Auto-fill Closest Marta Station with Parking?</label>
-        <input type="radio" name="martaAutoFill" value="Yes" /> Yes
-        <input type="radio" name="martaAutoFill" value="No" /> No <br /><br />
+          <label for="finalDestination">Final Destination:</label>
+          <select id="finalDestination" name="finalDestination">
+            <option value="95 Decatur St. SE, Atlanta, GA 30303">
+              Classroom South
+            </option>
+            <option value="LangdaleHall">Langdale Hall</option>
+          </select>
+        </div>
 
-        <label for="martaStationPark"
-          >Which Marta Station are you parking at:</label
-        >
-        <select id="martaStationPark" name="martaStationPark">
-          <option value="Doraville">Doraville Marta</option>
-          <option value="Dunwoody">Dunwoody Marta</option>
-        </select>
-        <br /><br />
+        <div id="martaStationOptions" style="display: none">
+          <label for="startDestination">Start Destination:</label>
+          <input type="text" id="startDestination" name="startDestination" />
+          <br /><br />
 
-        <label for="martaStationExit"
-          >Which Marta Station are you exiting at:</label
-        >
-        <select id="martaStationExit" name="martaStationExit">
-          <option value="Five Points">Five Points Marta</option>
-          <option value="Peachtree Center">Peachtree Center Marta</option>
-        </select>
-        <br /><br />
+          <label>Auto-fill Closest Marta Station with Parking?</label>
+          <input type="radio" name="martaAutoFill" value="Yes" /> Yes
+          <input type="radio" name="martaAutoFill" value="No" /> No <br /><br />
 
-        <label for="finalDestination">Final Destination:</label>
-        <select id="finalDestination" name="finalDestination">
-          <option value="ClassroomSouth">Classroom South</option>
-          <option value="LangdaleHall">Langdale Hall</option>
-        </select>
-      </div>
+          <label for="martaStationPark"
+            >Which Marta Station are you parking at:</label
+          >
+          <select id="martaStationPark" name="martaStationPark">
+            <option value="6000 New Peachtree Rd, Doraville, GA 30340">
+              Doraville Marta
+            </option>
+            <option value="Dunwoody">Dunwoody Marta</option>
+          </select>
+          <br /><br />
 
-      <div id="walkingMartaOptions" style="display: none">
-        <label>Auto-fill Closest Marta Station?</label>
-        <input type="radio" name="martaAutoFill" value="Yes" /> Yes
-        <input type="radio" name="martaAutoFill" value="No" /> No <br /><br />
+          <label for="martaStationExit"
+            >Which Marta Station are you exiting at:</label
+          >
+          <select id="martaStationExit" name="martaStationExit">
+            <option value="30 Alabama St SW, Atlanta, GA 30303">
+              Five Points Marta
+            </option>
+            <option value="Peachtree Center">Peachtree Center Marta</option>
+          </select>
+          <br /><br />
 
-        <label for="martaStationWalk"
-          >Which Marta Station are you walking to:</label
-        >
-        <select id="martaStationWalk" name="martaStationWalk">
-          <option value="Doraville">Doraville Marta</option>
-          <option value="Dunwoody">Dunwoody Marta</option>
-        </select>
-        <br /><br />
+          <label for="finalDestination">Final Destination:</label>
+          <select id="finalDestination" name="finalDestination">
+            <option value="95 Decatur St. SE, Atlanta, GA 30303">
+              Classroom South
+            </option>
+            <option value="LangdaleHall">Langdale Hall</option>
+          </select>
+        </div>
 
-        <label for="finalDestination">Final Destination:</label>
-        <select id="finalDestination" name="finalDestination">
-          <option value="ClassroomSouth">Classroom South</option>
-          <option value="LangdaleHall">Langdale Hall</option>
-        </select>
-      </div>
-    </form>
+        <div id="walkingMartaOptions" style="display: none">
+          <label>Auto-fill Closest Marta Station?</label>
+          <input type="radio" name="martaAutoFill" value="Yes" /> Yes
+          <input type="radio" name="martaAutoFill" value="No" /> No <br /><br />
+
+          <label for="martaStationWalk"
+            >Which Marta Station are you walking to:</label
+          >
+          <select id="martaStationWalk" name="martaStationWalk">
+            <option value="6000 New Peachtree Rd, Doraville, GA 30340">
+              Doraville Marta
+            </option>
+            <option value="Dunwoody">Dunwoody Marta</option>
+          </select>
+          <br /><br />
+
+          <label for="finalDestination">Final Destination:</label>
+          <select id="finalDestination" name="finalDestination">
+            <option value="95 Decatur St. SE, Atlanta, GA 30303">
+              Classroom South
+            </option>
+            <option value="LangdaleHall">Langdale Hall</option>
+          </select>
+        </div>
+        <button type="submit">Get Directions</button>
+      </form>
+      <div id="map"></div>
+    </div>
+
+    <script src="../../backend/navigationv2.js"></script>
   </body>
 </html>
