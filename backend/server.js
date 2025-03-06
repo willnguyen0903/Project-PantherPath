@@ -25,19 +25,19 @@ app.use(express.static(path.join(__dirname)));
 
 // Serve HTML file
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/UI/transitschedule.html"));
+    res.sendFile(path.join(__dirname, "../frontend/UI/transitSchedule.html"));
 });
 
-// User Registration (Uses `uid`, `username`, `password_hashed`)
+// User Registration (Uses `uid`, `username`, `password_hash`)
 app.post("/register", async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) return res.status(400).json({ message: "Missing fields" });
 
     try {
-        const password_hashed = await bcrypt.hash(password, 10);
+        const password_hash = await bcrypt.hash(password, 10);
         const result = await pool.query(
-            "INSERT INTO users (username, password_hashed) VALUES ($1, $2) RETURNING uid",
-            [username, password_hashed]
+            "INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING uid",
+            [username, password_hash]
         );
         res.status(201).json({ message: "User registered", uid: result.rows[0].uid });
     } catch (err) {
@@ -46,7 +46,7 @@ app.post("/register", async (req, res) => {
     }
 });
 
-// User Login (Finds user by `username` and checks `password_hashed`)
+// User Login (Finds user by `username` and checks `password_hash`)
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -54,7 +54,7 @@ app.post("/login", async (req, res) => {
         if (result.rows.length === 0) return res.status(401).json({ message: "Invalid credentials" });
 
         const user = result.rows[0];
-        const isMatch = await bcrypt.compare(password, user.password_hashed);
+        const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
 
         // Generate JWT with `uid`
