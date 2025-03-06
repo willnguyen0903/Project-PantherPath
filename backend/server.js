@@ -28,16 +28,16 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/UI/transitSchedule.html"));
 });
 
-// User Registration (Uses `uid`, `username`, `password_hash`)
+// User Registration (Uses `email`, `username`, `password_hash`)
 app.post("/register", async (req, res) => {
-    const { username, username, password } = req.body;
-    if (!username || !username || !password) return res.status(400).json({ message: "Missing fields" });
+    const { email, username, password } = req.body;
+    if (!email || !username || !password) return res.status(400).json({ message: "Missing fields" });
 
     try {
         const password_hash = await bcrypt.hash(password, 10);
         const result = await pool.query(
-            "INSERT INTO users (username, username, password_hash) VALUES ($1, $2, $3) RETURNING uid",
-            [username, username, password_hash]
+            "INSERT INTO users (email, username, password_hash) VALUES ($1, $2, $3) RETURNING uid",
+            [email, username, password_hash]
         );
         res.status(201).json({ message: "User registered", uid: result.rows[0].uid });
     } catch (err) {
