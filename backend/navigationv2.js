@@ -40,7 +40,7 @@ function initMap() {
 // Load the Google Maps API script
 function loadGoogleMapsScript() {
   const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCshta0wk-KdGcS79W3n68hFte-aKb4rhg&callback=initMap`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=API_KEY_HERE&callback=initMap`;
   script.async = true;
   document.head.appendChild(script);
 }
@@ -102,7 +102,7 @@ function calculateAndDisplayRoute() {
 
         // Generate a Google Maps link
         const googleMapsLink = generateGoogleMapsLink(start, end, waypoints);
-        console.log("Google Maps Link:", link);
+        console.log("Google Maps Link:", googleMapsLink);
         displayGoogleMapsLink(googleMapsLink);
       } else {
         console.error("Directions request failed due to " + status);
@@ -126,9 +126,14 @@ function generateGoogleMapsLink(start, end, waypoints) {
   )}&travelmode=driving`;
 }
 
-// Display the Google Maps link
 function displayGoogleMapsLink(link) {
+  const existingLinkContainer = document.querySelector(".link-container");
+  if (existingLinkContainer) {
+    existingLinkContainer.remove();
+  }
+
   const linkContainer = document.createElement("div");
+  linkContainer.className = "link-container"; // Add the CSS class
   linkContainer.innerHTML = `<a href="${link}" target="_blank">Open in Google Maps</a>`;
   document.querySelector(".container").appendChild(linkContainer);
   console.log("Link displayed:", link);

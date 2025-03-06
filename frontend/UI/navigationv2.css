@@ -138,3 +138,25 @@ button[type="submit"]:hover {
   margin-top: 20px;
   box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
 }
+
+.link-container {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.link-container a {
+  color: #003c8f;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link-container a:hover {
+  color: #002f6c;
+  text-decoration: underline;
+}
