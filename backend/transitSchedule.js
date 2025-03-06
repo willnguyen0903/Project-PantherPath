@@ -1,4 +1,4 @@
-const apiEndpoint = 'http://localhost:3000/marta/schedule';
+const apiEndpoint = `${window.location.origin}/marta/schedule`;
 
 async function fetchTrainSchedule() {
     const selectedStation = document.getElementById('stationSelect').value;
