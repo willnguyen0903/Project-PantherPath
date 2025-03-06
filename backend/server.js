@@ -1,98 +1,94 @@
-require('dotenv').config();
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const { Pool } = require('pg');
-const cors = require('cors');
-const jwt = require('jsonwebtoken'); 
+require("dotenv").config({ path: "./key.env" });
+const express = require("express");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { Pool } = require("pg");
+const axios = require("axios");
+const cors = require("cors");
+const path = require("path");
 
 const app = express();
-app.use(express.json());
-app.use(cors()); // Allow frontend to access backend
+const PORT = process.env.PORT || 3000;
+const JWT_SECRET = process.env.JWT_SECRET;
+const MARTA_API_KEY = process.env.MARTA_API_KEY;
 
-// PostgreSQL Database Connection
+// PostgreSQL connection setup
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }  // Required for Render PostgreSQL
+    ssl: { rejectUnauthorized: false }
 });
 
-// User Registration Route
-app.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;
+// Middleware
+app.use(express.json());
+app.use(cors({ origin: "*" }));
+app.use(express.static(path.join(__dirname)));
 
-    if (!username || !email || !password) {
-        return res.status(400).json({ message: "All fields are required" });
-    }
+// Serve HTML file
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "transitSchedule.html"));
+});
+
+// User Registration (Uses `uid`, `username`, `hashedpassword`)
+app.post("/register", async (req, res) => {
+    const { username, password } = req.body;
+    if (!username || !password) return res.status(400).json({ message: "Missing fields" });
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await pool.query(
-            "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING uid",
-            [username, email, hashedPassword]
+            "INSERT INTO users (username, hashedpassword) VALUES ($1, $2) RETURNING uid",
+            [username, hashedPassword]
         );
-        res.json({ message: "User registered successfully!", uid: result.rows[0].uid });
-    } catch (error) {
-        console.error("Error inserting user:", error);
-        res.status(500).json({ message: "Register Failed: Try different email" });
+        res.status(201).json({ message: "User registered", uid: result.rows[0].uid });
+    } catch (err) {
+        console.error("Registration error:", err);
+        res.status(500).json({ message: "Error registering user" });
     }
 });
 
-// User Login Route
-
-
-app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.status(400).json({ message: "Email and password are required" });
-    }
-
+// User Login (Finds user by `username` and checks `hashedpassword`)
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
     try {
-        const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
-
-        if (result.rows.length === 0) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
+        const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+        if (result.rows.length === 0) return res.status(401).json({ message: "Invalid credentials" });
 
         const user = result.rows[0];
-        const isValid = await bcrypt.compare(password, user.password_hash);
+        const isMatch = await bcrypt.compare(password, user.hashedpassword);
+        if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
 
-        if (!isValid) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-
-        // Generate JWT Token
-        const token = jwt.sign({ userId: user.uid }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN
-        });
-
-        res.json({ message: "Login successful!", token });
-    } catch (error) {
-        console.error("Login error:", error);
-        res.status(500).json({ message: "Database error" });
+        // Generate JWT with `uid`
+        const token = jwt.sign({ uid: user.uid }, JWT_SECRET, { expiresIn: "1h" });
+        res.json({ message: "Login successful", token });
+    } catch (err) {
+        console.error("Login error:", err);
+        res.status(500).json({ message: "Error logging in" });
     }
 });
 
 // JWT Middleware for Protected Routes
 const authenticateToken = (req, res, next) => {
-    const token = req.header('Authorization')?.split(' ')[1]; // Extract token from "Bearer TOKEN"
-    
-    if (!token) {
+    const authHeader = req.header('Authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(403).json({ message: "Access denied. No token provided." });
     }
+    const token = authHeader.split(' ')[1];
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || "default_secret");
-        req.user = decoded;
+        const decoded = jwt.verify(token, JWT_SECRET);
+        req.user = decoded; // `req.user.uid` now exists
         next();
     } catch (error) {
         res.status(401).json({ message: "Invalid token." });
     }
 };
 
-// Protected Route Example
+// Protected Profile Route (Fetches user by `uid`)
 app.get('/profile', authenticateToken, async (req, res) => {
     try {
-        const result = await pool.query("SELECT uid, username, email FROM users WHERE uid = $1", [req.user.uid]);
+        const result = await pool.query("SELECT uid, username FROM users WHERE uid = $1", [req.user.uid]);
+        if (result.rows.length === 0) return res.status(404).json({ message: "User not found" });
+
         res.json(result.rows[0]);
     } catch (error) {
         console.error("Profile fetch error:", error);
@@ -100,7 +96,18 @@ app.get('/profile', authenticateToken, async (req, res) => {
     }
 });
 
-// Start the Server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Fetch MARTA Train Schedule
+app.get("/marta/schedule", async (req, res) => {
+    try {
+        const response = await axios.get(`https://developerservices.itsmarta.com:18096/itsmarta/railrealtimearrivals/developerservices/traindata?apiKey=${MARTA_API_KEY}`);
+        res.json(response.data);
+    } catch (error) {
+        console.error("Error fetching MARTA schedule:", error.response ? error.response.data : error.message);
+        res.status(500).json({ error: "Failed to retrieve MARTA rail schedule", details: error.message });
+    }
+});
 
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
