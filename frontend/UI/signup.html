@@ -14,8 +14,8 @@
 
         <!-- Registration Form -->
         <form class="form" id="registerForm">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <label for="username">username</label>
+            <input type="username" id="username" name="username" required>
 
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
@@ -36,14 +36,14 @@
             event.preventDefault();
 
             const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             // Send data to the backend
             try {
                 const response = await fetch('https://project-pantherpath.onrender.com/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, email, password })
+                    body: JSON.stringify({ username, username, password })
                 });
 
                 const data = await response.json();
