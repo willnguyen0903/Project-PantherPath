@@ -30,14 +30,14 @@ app.get("/", (req, res) => {
 
 // User Registration (Uses `uid`, `username`, `password_hash`)
 app.post("/register", async (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) return res.status(400).json({ message: "Missing fields" });
+    const { email, username, password } = req.body;
+    if (!email || !username || !password) return res.status(400).json({ message: "Missing fields" });
 
     try {
         const password_hash = await bcrypt.hash(password, 10);
         const result = await pool.query(
-            "INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING uid",
-            [username, password_hash]
+            "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING uid",
+            [username, email, password_hash]
         );
         res.status(201).json({ message: "User registered", uid: result.rows[0].uid });
     } catch (err) {
