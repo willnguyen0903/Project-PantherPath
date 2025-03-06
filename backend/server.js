@@ -47,22 +47,36 @@ app.post("/register", async (req, res) => {
 });
 
 // User Login (Finds user by `username` and checks `password_hash`)
-app.post("/login", async (req, res) => {
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ message: "username and password are required" });
+    }
+
     try {
         const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
-        if (result.rows.length === 0) return res.status(401).json({ message: "Invalid credentials" });
+
+        if (result.rows.length === 0) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
 
         const user = result.rows[0];
-        const isMatch = await bcrypt.compare(password, user.password_hash);
-        if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
+        const isValid = await bcrypt.compare(password, user.password_hash);
 
-        // Generate JWT with `uid`
-        const token = jwt.sign({ uid: user.uid }, JWT_SECRET, { expiresIn: "1h" });
-        res.json({ message: "Login successful", token });
-    } catch (err) {
-        console.error("Login error:", err);
-        res.status(500).json({ message: "Error logging in" });
+        if (!isValid) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
+
+        // Generate JWT Token
+        const token = jwt.sign({ userId: user.uid }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRES_IN
+        });
+
+        res.json({ message: "Login successful!", token });
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).json({ message: "Database error" });
     }
 });
 
