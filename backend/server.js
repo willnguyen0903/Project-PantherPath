@@ -20,7 +20,7 @@ const pool = new Pool({
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+app.use(cors());
 app.use(express.static(path.join(__dirname)));
 
 // Serve HTML file

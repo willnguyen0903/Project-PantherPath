@@ -1,4 +1,4 @@
-const apiEndpoint = `${window.location.origin}/marta/schedule`;
+const apiEndpoint = `https://pantherpath-deploy.onrender.com/marta/schedule`;
 
 async function fetchTrainSchedule() {
     const selectedStation = document.getElementById('stationSelect').value;
