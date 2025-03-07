@@ -113,7 +113,7 @@ app.get('/profile', authenticateToken, async (req, res) => {
 // Fetch MARTA Train Schedule
 app.get("/marta/schedule", async (req, res) => {
     try {
-        const response = await axios.get(`https://developerservices.itsmarta.com:18096/itsmarta/railrealtimearrivals/developerservices/traindata?apiKey=${MARTA_API_KEY}`);
+        const response = await axios.get(`https://developerservices.itsmarta.com:18096/itsmarta/railrealtimearrivals/traindata?apiKey=${MARTA_API_KEY}`);
         res.json(response.data);
     } catch (error) {
         console.error("Error fetching MARTA schedule:", error.response ? error.response.data : error.message);
@@ -125,3 +125,4 @@ app.get("/marta/schedule", async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+
