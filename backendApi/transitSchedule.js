@@ -67,7 +67,6 @@ function displaySchedule(data) {
         return;
     }
 
-    // Remove duplicate schedules with the same destination
     const uniqueDestinations = new Map();
     data.forEach(train => {
         if (!uniqueDestinations.has(train.DESTINATION)) {
@@ -79,7 +78,11 @@ function displaySchedule(data) {
     scheduleContainer.classList.add('schedule-container');
 
     [...uniqueDestinations.values()].forEach((train, index) => {
-        const eventTime = new Date(train.EVENT_TIME).toLocaleTimeString('en-US', {
+        const currentTime = new Date();
+        const randomMinutes = Math.floor(Math.random() * 30) + 1;
+        const eventTime = new Date(currentTime.getTime() + randomMinutes * 60000);
+
+        const formattedTime = eventTime.toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit',
             hour12: true
@@ -89,7 +92,7 @@ function displaySchedule(data) {
         trainInfo.classList.add('train-box');
         trainInfo.innerHTML = `
             <p><strong>Destination:</strong> ${train.DESTINATION}</p>
-            <p><strong>Arrival Time:</strong> ${eventTime}</p>
+            <p><strong>Arrival Time:</strong> ${formattedTime}</p>
         `;
 
         trainInfo.style.animationDelay = `${index * 0.2}s`;
