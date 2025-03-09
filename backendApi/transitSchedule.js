@@ -67,10 +67,18 @@ function displaySchedule(data) {
         return;
     }
 
+    // Remove duplicate schedules with the same destination
+    const uniqueDestinations = new Map();
+    data.forEach(train => {
+        if (!uniqueDestinations.has(train.DESTINATION)) {
+            uniqueDestinations.set(train.DESTINATION, train);
+        }
+    });
+
     const scheduleContainer = document.createElement('div');
     scheduleContainer.classList.add('schedule-container');
 
-    data.forEach((train, index) => {
+    [...uniqueDestinations.values()].forEach((train, index) => {
         const eventTime = new Date(train.EVENT_TIME).toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit',
