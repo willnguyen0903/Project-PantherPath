@@ -17,6 +17,16 @@ body {
     background: linear-gradient(to bottom, #62C1E8, #2358B5);
     color: white;
 }
+
+/* Centering Container */
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 400px;
+  }
+
 .station-container {
     margin-top: 50px;
     padding: 20px;
@@ -42,6 +52,27 @@ select {
     gap: 15px;
     margin-top: 20px;
 }
+/* Header Styling */
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding:10px;
+  }
+
+.back-button {
+    background-color: black;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .back-button:hover {
+    background-color: #333;
+  }
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -70,16 +101,24 @@ select {
     </style>
 </head>
 <body>
+    <div class= "container">
+        <div class="header">
+            <button class="back-button" onclick="history.back()">
+                &#8592; Back
+            </button>
+        </div>
 
-    <div class="station-container">
-        <h2>Select Your Station</h2>
-        <select id="stationSelect" onchange="fetchTrainSchedule()">
-            <option value="">Pick Your Current Station</option>
-        </select>
-    </div>
+            <div class="station-container">
+                <h2>Select Your Station</h2>
+                <select id="stationSelect" onchange="fetchTrainSchedule()">
+                    <option value="">Pick Your Current Station</option>
+                </select>
+            </div>
+
 
     <div id="schedule"></div>
 
     <script src="transitSchedule.js"></script>
+   </div>
 </body>
 </html>
