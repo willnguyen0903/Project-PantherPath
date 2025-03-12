@@ -157,3 +157,20 @@ button[type="submit"]:hover {
   color: #002f6c;
   text-decoration: underline;
 }
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
