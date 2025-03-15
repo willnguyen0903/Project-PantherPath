@@ -10,7 +10,7 @@ const parkingLotsData = {
           Saturday – Sunday, and Monday – Friday<br>
           <bold>After Hours: Permit Access Only</bold>
         `,
-        image: "../images/T_deck.jpg",
+        image: "./images/T_deck.jpg",
         accessibility: "Yes",
       },
       {
@@ -84,7 +84,7 @@ const parkingLotsData = {
     ],
     decatur: [
       {
-        name: "Decatur Deck",
+        name: "Decatur Campus",
         location: "3251 Panthersville Rd, Decatur, GA",
         googleMaps: "https://map.concept3d.com/?id=1108#!ce/22382,0,29779,29783,29784,29788,29770?ct/0,22382,29788,29784,29783,29782,29779,29770?mc/33.6892368746062,-84.27616059780122?z/17?lvl/0",
         hours: "6 AM - 9 PM",
@@ -94,7 +94,7 @@ const parkingLotsData = {
     ],
     dunwoody: [
       {
-        name: "Dunwoody Deck",
+        name: "Dunwoody Campus",
         location: "2101 Womack Rd, Dunwoody, GA",
         googleMaps: "https://map.concept3d.com/?id=1108#!ce/29770?ct/0,29788,29784?lvl/0?m/290127?mc/33.94174893455726,-84.30360496044159?s/?z/17",
         hours: "7 AM - 10 PM",
@@ -104,7 +104,7 @@ const parkingLotsData = {
     ],
     newton: [
       {
-        name: "Newton Deck",
+        name: "Newton Campus",
         location: "239 Cedar Ln, Covington, GA",
         googleMaps: "https://map.concept3d.com/?id=1108#!ce/29770?ct/0,29788,29784?lvl/0?mc/33.60906169230395,-83.75876784324647?z/16",
         hours: "7 AM - 7 PM",
