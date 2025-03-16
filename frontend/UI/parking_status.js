@@ -88,7 +88,7 @@ const parkingLotsData = {
         location: "3251 Panthersville Rd, Decatur, GA",
         googleMaps: "https://map.concept3d.com/?id=1108#!ce/22382,0,29779,29783,29784,29788,29770?ct/0,22382,29788,29784,29783,29782,29779,29770?mc/33.6892368746062,-84.27616059780122?z/17?lvl/0",
         hours: "6 AM - 9 PM",
-        image: "images/Decatur_campus.jpeg",
+        image: "images/decatur_campus.jpeg",
         accessibility: "Yes",
       },
     ],
