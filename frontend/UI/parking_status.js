@@ -10,7 +10,7 @@ const parkingLotsData = {
           Saturday – Sunday, and Monday – Friday<br>
           <bold>After Hours: Permit Access Only</bold>
         `,
-        image: "./images/T_deck.jpg",
+        image: "images/T_deck.jpg",
         accessibility: "Yes",
       },
       {
@@ -27,7 +27,7 @@ const parkingLotsData = {
           Saturday: 7 a.m. – 9:30 p.m. (Collins St. Entrance only)<br>
           Sunday: 11 a.m. – 9:30 p.m. (Collins St. Entrance only)
         `,
-        image: "../images/G_deck.jpg",
+        image: "images/G_deck.jpg",
         accessibility: "Yes",
       },
       {
@@ -38,7 +38,7 @@ const parkingLotsData = {
           6:30am – 9:45pm. No overnight parking.<br>
           Saturday/Sunday (Closed)
         `,
-        image: "../images/K_deck.jpg",
+        image: "images/K_deck.jpg",
         accessibility: "No",
       },
       {
@@ -48,7 +48,7 @@ const parkingLotsData = {
         hours: `
           6:30am – 9:45pm. No overnight parking.
         `,
-        image: "../images/N_deck.jpg",
+        image: "images/N_deck.jpg",
         accessibility: "No",
       },
       {
@@ -58,7 +58,7 @@ const parkingLotsData = {
         hours: `
           6:30am – 9:45pm. No overnight parking.
         `,
-        image: "../images/S_deck.jpg",
+        image: "images/S_deck.jpg",
         accessibility: "No",
       },
     ],
@@ -68,7 +68,7 @@ const parkingLotsData = {
         location: "3705 Brookside Parkway Alpharetta, GA 30022",
         googleMaps: "https://map.concept3d.com/?id=1108#!ce/29770?ct/29770?s/",
         hours: "6 AM - 9 PM",
-        image: "../images/alpharetta_campus.jpg",
+        image: "images/alpharetta_campus.jpg",
         accessibility: "Yes",
       },
     ],
@@ -78,7 +78,7 @@ const parkingLotsData = {
         location: "555 N Indian Creek Dr, Clarkston, GA",
         googleMaps: "https://map.concept3d.com/?id=1108#!ce/29770?ct/0,29788,29784?s/",
         hours: "7 AM - 8 PM",
-        image: "../images/clarkston_campus.jpg",
+        image: "images/clarkston_campus.jpg",
         accessibility: "Yes",
       },
     ],
@@ -88,7 +88,7 @@ const parkingLotsData = {
         location: "3251 Panthersville Rd, Decatur, GA",
         googleMaps: "https://map.concept3d.com/?id=1108#!ce/22382,0,29779,29783,29784,29788,29770?ct/0,22382,29788,29784,29783,29782,29779,29770?mc/33.6892368746062,-84.27616059780122?z/17?lvl/0",
         hours: "6 AM - 9 PM",
-        image: "../images/decatur_campus.jpeg",
+        image: "images/decatur_campus.jpeg",
         accessibility: "Yes",
       },
     ],
@@ -98,7 +98,7 @@ const parkingLotsData = {
         location: "2101 Womack Rd, Dunwoody, GA",
         googleMaps: "https://map.concept3d.com/?id=1108#!ce/29770?ct/0,29788,29784?lvl/0?m/290127?mc/33.94174893455726,-84.30360496044159?s/?z/17",
         hours: "7 AM - 10 PM",
-        image: "../images/dunwoody_campus.jpeg",
+        image: "images/dunwoody_campus.jpeg",
         accessibility: "Yes",
       },
     ],
@@ -108,7 +108,7 @@ const parkingLotsData = {
         location: "239 Cedar Ln, Covington, GA",
         googleMaps: "https://map.concept3d.com/?id=1108#!ce/29770?ct/0,29788,29784?lvl/0?mc/33.60906169230395,-83.75876784324647?z/16",
         hours: "7 AM - 7 PM",
-        image: "../images/newton_campus.jpg",
+        image: "images/newton_campus.jpg",
         accessibility: "Yes",
       },
     ],
