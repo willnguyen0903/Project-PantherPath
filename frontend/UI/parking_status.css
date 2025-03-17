@@ -12,7 +12,7 @@ body {
 .container {
   max-width: 600px;
   margin: auto;
-  background: white;
+  background: #84c9e6;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -79,8 +79,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
+  background: #84c9e6;
   padding: 20px;
+  clip-path: inset(0 0 20px 0 round 10px);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   width: 80%;
@@ -91,18 +92,22 @@ body {
   align-items: center;
 }
 
+.info-board-btn{
+  padding:30px;
+}
+
 .hidden {
   display: none;
 }
 
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 1px;
+  right: 5px;
   background: red;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 5px 8px;
   border-radius: 20%;
   cursor: pointer;
 }
@@ -122,9 +127,16 @@ body {
 .info-page.active {
   display: block;
 }
+.info-page h2{
+  text-decoration:underline;
+}
 
 .deck-image {
-  width: 100%;
+  position: relative;
+  left: -15px;
+  width:100%;
+  height: 105%;
+  object-fit: cover;
   border-radius: 10px;
 }
 
