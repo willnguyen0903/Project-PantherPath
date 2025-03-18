@@ -81,7 +81,7 @@ body {
   transform: translate(-50%, -50%);
   background: #84c9e6;
   padding: 20px;
-  clip-path: inset(0 0 20px 0 round 10px);
+  clip-path: inset(0 0 25px 0 round 10px);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   width: 80%;
