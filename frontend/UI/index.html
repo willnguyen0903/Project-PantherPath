@@ -5,12 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panther-Path</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Add Font Awesome for menu icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <img src="logo.png" alt="Panther-Path Logo" class="logo">
-        <button class="btn" onclick="window.location.href='login.html'">Login</button>
-        <button class="btn" onclick="window.location.href='signup.html'">Sign Up</button>
+    <!-- Mobile menu button -->
+    <div class="menu-toggle" id="mobile-menu">
+        <i class="fas fa-bars"></i>
     </div>
+
+    <!-- Navigation bar -->
+    <div class="navigation-bar" id="nav-bar">
+        <ul>
+            <li><a href="transitSchedule.html">Transit Schedule</a></li>
+            <li><a href="navigationv2.html">Route Planner</a></li>
+            <li><a href="saved_route.html">Saved Routes</a></li>
+            <li><a href="parking_status.html">Parking</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <div class="center-container">
+            <img src="logo.png" alt="Panther-Path Logo" class="logo">
+            <button class="btn" onclick="window.location.href='login.html'">Login</button>
+            <button class="btn" onclick="window.location.href='signup.html'">Sign Up</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navBar = document.getElementById('nav-bar');
+        
+        mobileMenu.addEventListener('click', function() {
+            navBar.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link (optional)
+        const navLinks = document.querySelectorAll('.navigation-bar a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    navBar.classList.remove('active');
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>
