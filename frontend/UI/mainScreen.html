@@ -8,44 +8,37 @@
 </head>
 <body>
     <div class="header">
-        <img src="logo.png" alt="PantherPath Logo" class="logo">
+        <img id="logo" src="logo.png" alt="PantherPath Logo" class="logo">
         <div class="nav-links">
-            <a href="login.html">Logout</a>
+            <a href="index.html">
+                <img src="images/logout-icon.png" alt="Logout Icon" class="logout-icon">
+            </a>
         </div>
     </div>
     <div class="content">
         <div class="main-content">
             <div class="heading-container">
-                <h1 class="heading">Commute with Confidence</h1>
+                <h1 class="heading">Commute<br>With<br>Confidence</h1>
             </div>
+            <div class="vertical-line"></div>
             <div class="buttons-container">
-                <button id='traveling-btn' class="custom-button">Traveling</button>
+                <div class="buttons-wrapper">
+                    <button id='traveling-btn' class="custom-button">Route Planner</button>
+                    <button id='saved-route-btn' class="custom-button">Saved Routes</button>
+                    <button id='parking-btn' class="custom-button">Parking</button>
 
+                    <button id='transit-schedule-btn' class="custom-button">Transit Schedule</button>
+                </div>
                 <script type="text/javascript">
                     document.getElementById("traveling-btn").onclick = function () {
                         location.href = "navigationv2.html";
                     };
-                </script>
-
-                <button id='parking-btn' class="custom-button">Parking Decks</button>
-
-                <script type="text/javascript">
                     document.getElementById("parking-btn").onclick = function () {
                         location.href = "parking_status.html";
                     };
-                </script>
-
-                <button id='saved-route-btn' class="custom-button">Saved Routes</button>
-
-                <script type="text/javascript">
                     document.getElementById("saved-route-btn").onclick = function () {
                         location.href = "saved_route.html";
                     };
-                </script>
-
-                <button id='transit-schedule-btn' class="custom-button">View Transit Schedule</button>
-
-                <script type="text/javascript">
                     document.getElementById("transit-schedule-btn").onclick = function () {
                         location.href = "transitSchedule.html";
                     };
