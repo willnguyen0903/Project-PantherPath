@@ -56,6 +56,14 @@
     </script>
   </head>
   <body onload="updateForm()">
+    <div class="header">
+      <a href="mainScreen.html">
+        <img src="logo.png" alt="Logo" class="logo" />
+      </a>
+      <a href="index.html">
+        <img src="images/logout-icon.png" alt="Logout Icon" class="logout-icon" />
+      </a>
+    </div>
     <div class="container">
       <form onsubmit="event.preventDefault(); calculateAndDisplayRoute();">
         <h1>PantherPath Navigation</h1>
@@ -259,12 +267,6 @@
         <button type="submit">Get Directions</button>
       </form>
       <div id="map"></div>
-    </div>
-
-    <div class="header">
-      <button class="back-button" onclick="history.back()">
-        &#8592; Back
-      </button>
     </div>
 
     <script src="./navigationv2.js"></script>

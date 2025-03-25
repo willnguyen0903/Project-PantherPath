@@ -13,6 +13,7 @@ body {
   font-family: "Arial", sans-serif;
   padding: 20px;
   overflow-y: auto;
+  padding-top: 100px;
 }
 
 .container {
@@ -158,19 +159,38 @@ button[type="submit"]:hover {
   text-decoration: underline;
 }
 
-.back-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
+.header {
+  width: 90%;
+  max-width: 1200px;
+  height: 70px;
+  background-color: rgb(44, 44, 255);
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.back-button:hover {
-  background-color: #0056b3;
+.logo {
+  display: block;
+  margin: 0 auto;
+  width: 70px;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logout-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: auto;
+  cursor: pointer;
 }
