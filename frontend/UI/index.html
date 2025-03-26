@@ -16,6 +16,10 @@
 
     <!-- Navigation bar -->
     <div class="navigation-bar" id="nav-bar">
+        <!-- Close button (mobile only) -->
+        <div class="close-btn" id="close-sidebar">
+            <i class="fas fa-times"></i>
+        </div>
         <ul>
             <li><a href="transitSchedule.html">Transit Schedule</a></li>
             <li><a href="navigationv2.html">Route Planner</a></li>
@@ -32,24 +36,44 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navBar = document.getElementById('nav-bar');
-        
-        mobileMenu.addEventListener('click', function() {
-            navBar.classList.toggle('active');
-        });
-        
-        // Close menu when clicking on a link (optional)
-        const navLinks = document.querySelectorAll('.navigation-bar a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navBar = document.getElementById('nav-bar');
+            const closeSidebar = document.getElementById('close-sidebar');
+    
+            function openSidebar() {
+                navBar.classList.add('active');
+                mobileMenu.style.display = 'none';
+            }
+    
+            function closeSidebarFn() {
+                navBar.classList.remove('active');
+                mobileMenu.style.display = 'block';
+            }
+    
+            mobileMenu.addEventListener('click', openSidebar);
+            closeSidebar.addEventListener('click', closeSidebarFn);
+    
+            // Close on nav link click for mobile
+            const navLinks = document.querySelectorAll('.navigation-bar a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    if (window.innerWidth <= 768) {
+                        closeSidebarFn();
+                    }
+                });
+            });
+    
+            // Handle resize
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 768) {
                     navBar.classList.remove('active');
+                    mobileMenu.style.display = 'none'; // Hide menu on desktop
+                } else {
+                    mobileMenu.style.display = 'block'; // Show menu on mobile
                 }
             });
         });
-    });
-    </script>
+    </script>    
 </body>
 </html>

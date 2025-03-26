@@ -103,6 +103,18 @@ body {
     transform: scale(1.05);
 }
 
+/* Close button inside sidebar */
+.close-btn {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+}
+
 /* Mobile styles */
 @media (max-width: 768px) {
     .menu-toggle {
@@ -123,4 +135,9 @@ body {
         margin-left: 0;
         width: 100%;
     }
+
+    .navigation-bar.active .close-btn {
+        display: block;
+    }
 }
+
