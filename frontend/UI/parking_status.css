@@ -19,29 +19,40 @@ body {
 }
 
 .header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 20px;
+  width: 90%;
+  max-width: 1200px;
+  height: 70px;
+  background-color: #002f6c;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.back-button {
+.logo {
+  display: block;
+  margin: 0 auto;
+  width: 70px;
+  height: auto;
   position: absolute;
-  top: 10px;
-  left: 10px;
-  border-radius: 50%;
-  width: 40px; 
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #0f74e0; 
-  color: white;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.back-button:hover {
-  background-color: #578fcc;
+#home-btn {
+  color:#ffffff;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: auto;
+  cursor: pointer;
 }
 
 .campus-selection {

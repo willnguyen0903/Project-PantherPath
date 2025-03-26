@@ -1,4 +1,166 @@
-@keyframes fadeInUp {
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    background: 
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(0, 0, 255, 0.7)), 
+        url('gsu.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#logo {
+    margin: 0;
+    width: 65px;
+    height: auto;
+}
+
+.nav-links {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-links a {
+    display: inline-block;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.nav-links a:hover {
+    background-color: #0056b3;
+    border-color: #003f7f;
+}
+
+.header {
+    position: relative;
+    height: 100px;
+    margin: 20px;
+    background-color: #002f6c;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: calc(100vh - 80px);
+    gap: 40px;
+    margin: 0 20px;
+}
+
+.vertical-line {
+    width: 2px;
+    height: 30%;
+    background-color: #ffffff;
+    align-self: center;
+    display: block;
+    opacity: 0;
+    animation: fadeInFromBelow 0.8s ease-out forwards;
+    animation-delay: 0.8s;
+}
+
+.heading-container {
+    flex: 1;
+    text-align: left;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    max-width: 40%;
+    animation: fadeInFromBelow 0.1s ease-out forwards;
+    animation-delay: 0s;
+}
+
+.heading {
+    font-size: 40px;
+    font-style: italic;
+    font-weight: bold;
+    color: white;
+    line-height: 1.4;
+    font-family: monospace;
+    word-wrap: break-word;
+    text-align: left;
+    white-space: pre-line;
+}
+
+.buttons-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.custom-button {
+    padding: 15px 20px;
+    background-color: #002f6c;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    font-family: "Times New Roman", Times, serif;
+    opacity: 0;
+    animation: fadeInFromBelow 0.8s ease-out forwards;
+}
+
+.custom-button:nth-child(1) {
+    animation-delay: 1.6s;
+}
+
+.custom-button:nth-child(2) {
+    animation-delay: 1.8s;
+}
+
+.custom-button:nth-child(3) {
+    animation-delay: 2s;
+}
+
+.custom-button:nth-child(4) {
+    animation-delay: 2.2s;
+}
+
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+@keyframes fadeInFromBelow {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -9,114 +171,28 @@
     }
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: url('gsu.jpg') center/cover no-repeat;
-    position: relative;
+@media (max-width: 768px) {
+    .heading-container {
+        max-width: 60%;
+        margin-left: 10px;
+    }
+
+    .heading {
+        font-size: 28px;
+        line-height: 1.3;
+    }
+
+    .vertical-line {
+        height: 20%;
+    }
+
+    .buttons-wrapper {
+        max-width: 90%;
+    }
 }
 
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(0, 0, 255, 0.7));
-}
-
-.header {
-    position: absolute;
-    top: 10px;
-    left: 10px; 
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-}
-
-
-.logo {
-    height: 100px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 50px;
-    justify-content: flex-end;
-    position: absolute;
-    right: 70px;
-    top: 20px;
-
-}
-
-.nav-links a {
-    color: rgb(232, 147, 12);
-    text-decoration: none;
-    font-size: 18px;
-    padding: 5px;
-    transition: background-color 0.4s;
-}
-
-.nav-links a:hover{
-    background-color: #838282;
-}
-
-.content {
-    position: relative;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    z-index: 1;
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-}
-
-.main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    gap: 20px; 
-}
-
-.heading-container {
-    margin-bottom: 20px; 
-    margin-top: -100px; 
-}
-
-.heading {
-    font-size: 50px; 
-    animation: fadeInUp 1s ease-in-out; 
-}
-
-.buttons-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; 
-}
-
-.custom-button {
-    background-color: blue; 
-    color: white; 
-    border: none;
-    width: 200px; 
-    height: 50px; 
-    font-size: 18px; 
-    border-radius: 10px; 
+.logout-icon {
+    width: 30px;
+    height: 30px;
     cursor: pointer;
-    animation: fadeInUp 1s ease-in-out; 
-    animation-delay: 0.5s; 
-    transition: transform 0.3s ease, color 0.3s ease; 
-}
-
-.custom-button:hover {
-    transform: translateY(-5px); 
-    color: orange; 
 }

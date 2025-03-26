@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Train Schedule</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <link rel="stylesheet" href="transitSchedule.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
+    <div class="header">
+        <a href="mainScreen.html">
+          <img src="logo.png" alt="Logo" class="logo" />
+        </a>
+        <a href="mainScreen.html">
+          <i class="fa-solid fa-house" id="home-btn"></i>
+        </a>
+    </div>
+    
     <div class="station-container">
         <h2>Select Your Station</h2>
         <select id="stationSelect" onchange="fetchTrainSchedule()">
@@ -18,11 +27,6 @@
 
     <div id="schedule"></div>
 
-    <div class="header">
-        <button class="back-button" onclick="history.back()">
-            <i class="fa fa-arrow-left"></i>
-        </button>
-    </div>
     <script src="./transitSchedule.js"></script>
 </body>
 </html>

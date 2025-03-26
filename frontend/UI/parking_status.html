@@ -4,20 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parking Lots - PantherPath</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <link rel="stylesheet" href="parking_status.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script defer src="parking_status.js"></script>
   </head>
   <body>
+    <div class="header">
+      <a href="mainScreen.html">
+        <img src="logo.png" alt="Logo" class="logo" />
+      </a>
+      <a href="mainScreen.html">
+        <i class="fa-solid fa-house" id="home-btn"></i>
+      </a>
+    </div>
     <div class="container">
-      <!-- Back Button -->
-      <div class="header">
-        <button class="back-button" onclick="history.back()">
-          <i class="fa fa-arrow-left"></i>
-        </button>
-        <h1>🚗 Parking Guide</h1>
-      </div>
-
       <!-- Campus Selection Dropdown -->
       <div class="campus-selection">
         <label for="campus-select"><strong>Select Campus:</strong></label>
