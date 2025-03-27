@@ -120,7 +120,7 @@ app.get("/marta/schedule", async (req, res) => {
         res.status(500).json({ error: "Failed to retrieve MARTA rail schedule", details: error.message });
     }
 });
-
+// report incident
 app.post('/report-incident', async (req, res) => {
     const { username, location, description } = req.body;
   
@@ -137,7 +137,41 @@ app.post('/report-incident', async (req, res) => {
       res.status(500).json({ message: 'Error reporting incident.' });
     }
 });
-  
+// fetch reports menu
+app.get('/incident-reports', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT * FROM incident_report
+            WHERE timestamp >= NOW() - INTERVAL '2 hours'
+            ORDER BY timestamp DESC
+        `);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error fetching reports:', err);
+        res.status(500).json({ message: 'Error fetching reports' });
+    }
+});
+//upvote & downvote
+app.post('/incident-report/:id/upvote', async (req, res) => {
+    try {
+        await pool.query(`UPDATE incident_report SET upvotes = upvotes + 1 WHERE report_id = $1`, [req.params.id]);
+        res.json({ message: 'Upvoted successfully!' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Upvote failed' });
+    }
+});
+
+app.post('/incident-report/:id/downvote', async (req, res) => {
+    try {
+        await pool.query(`UPDATE incident_report SET downvotes = downvotes + 1 WHERE report_id = $1`, [req.params.id]);
+        res.json({ message: 'Downvoted successfully!' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Downvote failed' });
+    }
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

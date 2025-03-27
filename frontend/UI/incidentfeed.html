@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Incident Reports - PantherPath</title>
+  <link rel="stylesheet" href="login_styles.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Recent Incident Reports</h1>
+    <div id="report-list"></div>
+  </div>
+
+  <script>
+    const reportList = document.getElementById("report-list");
+
+    async function fetchReports() {
+      const res = await fetch("https://project-pantherpath.onrender.com/incident-reports");
+      const reports = await res.json();
+
+      reportList.innerHTML = ''; // Clear old content
+
+      reports.forEach(report => {
+        const div = document.createElement("div");
+        div.className = "report";
+
+        div.innerHTML = `
+          <p><strong>@${report.username}</strong> reported: <em>${report.description}</em></p>
+          <p><strong>Location:</strong> ${report.location}</p>
+          <p><small>Posted: ${new Date(report.timestamp).toLocaleString()}</small></p>
+          <button onclick="vote(${report.report_id}, 'upvote')">👍 ${report.upvotes}</button>
+          <button onclick="vote(${report.report_id}, 'downvote')">👎 ${report.downvotes}</button>
+          <hr>
+        `;
+
+        reportList.appendChild(div);
+      });
+    }
+
+    async function vote(id, type) {
+      try {
+        await fetch(`https://project-pantherpath.onrender.com/incident-report/${id}/${type}`, {
+          method: 'POST'
+        });
+        fetchReports(); // Refresh
+      } catch (err) {
+        console.error("Voting failed", err);
+      }
+    }
+
+    fetchReports(); // Load on page
+  </script>
+
+  <style>
+    .report {
+      background: #f4f4f4;
+      padding: 1em;
+      border-radius: 8px;
+      margin-bottom: 1em;
+    }
+
+    .report button {
+      margin-right: 10px;
+    }
+  </style>
+
+</body>
+</html>
