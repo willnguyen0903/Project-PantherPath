@@ -126,7 +126,7 @@ app.post('/report-incident', async (req, res) => {
     const created_at = new Date();
   
     try {
-      const result = await db.query(`
+      const result = await pool.query(`
         INSERT INTO incident_report (username, location, description, created_at, upvotes, downvotes)
         VALUES ($1, $2, $3, $4, 0, 0)
         RETURNING *;
