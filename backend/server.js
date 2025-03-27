@@ -123,14 +123,13 @@ app.get("/marta/schedule", async (req, res) => {
 
 app.post('/report-incident', async (req, res) => {
     const { username, location, description } = req.body;
-    const created_at = new Date();
   
     try {
       const result = await pool.query(`
-        INSERT INTO incident_report (username, location, description, created_at, upvotes, downvotes)
+        INSERT INTO incident_report (username, location, description, upvotes, downvotes)
         VALUES ($1, $2, $3, $4, 0, 0)
         RETURNING *;
-      `, [username, location, description, created_at]);
+      `, [username, location, description]);
   
       res.json({ message: 'Incident reported successfully!', report: result.rows[0] });
     } catch (err) {
