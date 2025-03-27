@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report Incident - Panther-Path</title>
+  <link rel="icon" href="logo.png" type="image/x-icon"/>
+  <link rel="stylesheet" href="login_styles.css" />
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html">
+      <img src="logo.png" alt="Panther-Path Logo" class="logo" />
+    </a>
+
+    <form class="form" id="incidentForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" placeholder="e.g. Hurt Park" required>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
+
+      <button type="submit" class="btn">Submit Report</button>
+
+      <p class="signup-link"><a href="incidentFeed.html">View All Reports</a></p>
+    </form>
+
+    <p id="message"></p>
+  </div>
+
+  <script>
+    document.getElementById('incidentForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const location = document.getElementById('location').value;
+      const description = document.getElementById('description').value;
+
+      try {
+        const response = await fetch('https://project-pantherpath.onrender.com/report-incident', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, location, description })
+        });
+
+        const data = await response.json();
+        document.getElementById('message').innerText = data.message;
+
+        if (response.ok) {
+          document.getElementById('incidentForm').reset();
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('message').innerText = "Failed to report incident.";
+      }
+    });
+  </script>
+
+</body>
+</html>

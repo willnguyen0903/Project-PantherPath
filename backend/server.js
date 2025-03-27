@@ -121,6 +121,24 @@ app.get("/marta/schedule", async (req, res) => {
     }
 });
 
+app.post('/report-incident', async (req, res) => {
+    const { username, location, description } = req.body;
+    const created_at = new Date();
+  
+    try {
+      const result = await db.query(`
+        INSERT INTO incident_report (username, location, description, created_at, upvotes, downvotes)
+        VALUES ($1, $2, $3, $4, 0, 0)
+        RETURNING *;
+      `, [username, location, description, created_at]);
+  
+      res.json({ message: 'Incident reported successfully!', report: result.rows[0] });
+    } catch (err) {
+      console.error('Error inserting incident:', err);
+      res.status(500).json({ message: 'Error reporting incident.' });
+    }
+});
+  
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
