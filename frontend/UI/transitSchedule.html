@@ -10,12 +10,22 @@
 </head>
 <body>
     <div class="header">
-        <a href="mainScreen.html">
-          <img src="logo.png" alt="Logo" class="logo" />
-        </a>
-        <a href="mainScreen.html">
+        <img src="logo.png" alt="Logo" class="logo" />
+        <a href="#">
           <i class="fa-solid fa-house" id="home-btn"></i>
         </a>
+        <script>
+            document.getElementById("home-btn").addEventListener("click", function(event) {
+              event.preventDefault(); // Stop link from navigating immediately
+              const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+              if (token) {
+                // Redirect to index or mainScreen
+                window.location.href = "mainScreen.html";
+              } else {
+                window.location.href = "index.html";
+              }
+            });
+        </script>
     </div>
     
     <div class="station-container">
