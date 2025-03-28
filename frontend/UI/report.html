@@ -5,23 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Report Incident - Panther-Path</title>
   <link rel="icon" href="logo.png" type="image/x-icon"/>
-  <link rel="stylesheet" href="login_styles.css" />
+  <link rel="stylesheet" href="report.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-  <div class="container">
-    <a href="index.html">
-      <img src="logo.png" alt="Panther-Path Logo" class="logo" />
+  <div class="header">
+    <a href="mainScreen.html">
+      <img src="logo.png" alt="Logo" class="logo" />
     </a>
-
+    <a href="mainScreen.html">
+      <i class="fa-solid fa-house" id="home-btn"></i>
+    </a>
+  </div>
+  
+  <div class="container">
+    <h1>REPORT AN INCIDENT</h1>
     <form class="form" id="incidentForm">
       <label for="username">Username</label>
       <input type="text" id="username" name="username" required>
 
       <label for="location">Location</label>
-      <input type="text" id="location" name="location" placeholder="e.g. Hurt Park" required>
+      <input type="text" id="location" name="location" placeholder="Where did the incident occur?" required>
 
-      <label for="description">Description</label>
+      <label for="description">Incident details</label>
       <textarea id="description" name="description" rows="4" required></textarea>
 
       <button type="submit" class="btn">Submit Report</button>
@@ -29,10 +35,20 @@
       <p class="signup-link"><a href="incidentfeed.html">View All Reports</a></p>
     </form>
 
+    <p id="login-message" style="display:none; color: red;">Please log in to post an incident.</p>
+
     <p id="message"></p>
   </div>
 
   <script>
+    const token = sessionStorage.getItem('token') || sessionStorage.getItem('token');
+
+    if (!token) {
+        alert("Please log in to access this page.");
+        window.location.href = "login.html"; // or index.html
+    }
+    console.log(token);
+
     document.getElementById('incidentForm').addEventListener('submit', async function(event) {
       event.preventDefault();
 
@@ -58,6 +74,7 @@
         document.getElementById('message').innerText = "Failed to report incident.";
       }
     });
+
   </script>
 
 </body>

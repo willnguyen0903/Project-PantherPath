@@ -12,10 +12,23 @@
     <div class="header">
         <img id="logo" src="logo.png" alt="PantherPath Logo" class="logo">
         <div class="nav-links">
-            <a href="index.html">
+            <a href="#" id="logout-btn">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            </a>
-        </div>
+              </a>
+              
+    </div>
+    <script>
+        document.getElementById("logout-btn").addEventListener("click", function(event) {
+          event.preventDefault(); // Stop link from navigating immediately
+      
+          // Remove token
+          localStorage.removeItem('token');
+          sessionStorage.removeItem('token'); // Just in case
+      
+          // Redirect to login or home
+          window.location.href = "index.html";
+        });
+    </script>
     </div>
     <div class="content">
         <div class="main-content">
@@ -29,23 +42,27 @@
                     <button id='transit-schedule-btn' class="custom-button">Transit Schedule</button>
                     <button id='parking-btn' class="custom-button">Parking</button>
                     <button id='saved-route-btn' class="custom-button">Saved Routes</button>
+                    <button id='incident-report-btn' class="custom-button">Report An Incident</button>
                 </div>
-                <script type="text/javascript">
-                    document.getElementById("traveling-btn").onclick = function () {
-                        location.href = "navigationv2.html";
-                    };
-                    document.getElementById("parking-btn").onclick = function () {
-                        location.href = "parking_status.html";
-                    };
-                    document.getElementById("saved-route-btn").onclick = function () {
-                        location.href = "saved_route.html";
-                    };
-                    document.getElementById("transit-schedule-btn").onclick = function () {
-                        location.href = "transitSchedule.html";
-                    };
-                </script>
             </div>
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    document.getElementById("traveling-btn").onclick = function () {
+        location.href = "navigationv2.html";
+    };
+    document.getElementById("parking-btn").onclick = function () {
+        location.href = "parking_status.html";
+    };
+    document.getElementById("saved-route-btn").onclick = function () {
+        location.href = "saved_route.html";
+    };
+    document.getElementById("transit-schedule-btn").onclick = function () {
+        location.href = "transitSchedule.html";
+    };
+    document.getElementById("incident-report-btn").onclick = function () {
+        location.href = "report.html";
+    };
+</script>
 </html>

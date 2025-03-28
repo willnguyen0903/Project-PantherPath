@@ -3,10 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Incident Reports - PantherPath</title>
-  <link rel="stylesheet" href="login_styles.css">
+  <link rel="stylesheet" href="incidentfeed.css">
+  <link rel="icon" href="logo.png" type="image/x-icon"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
+  <div class="header">
+    <a href="mainScreen.html">
+      <img src="logo.png" alt="Logo" class="logo" />
+    </a>
+    <a href="mainScreen.html">
+      <i class="fa-solid fa-house" id="home-btn"></i>
+    </a>
+  </div>
+  
   <div class="container">
     <h1>Recent Incident Reports</h1>
     <div id="report-list"></div>
@@ -51,19 +61,6 @@
 
     fetchReports(); // Load on page
   </script>
-
-  <style>
-    .report {
-      background: #f4f4f4;
-      padding: 1em;
-      border-radius: 8px;
-      margin-bottom: 1em;
-    }
-
-    .report button {
-      margin-right: 10px;
-    }
-  </style>
 
 </body>
 </html>

@@ -1,0 +1,190 @@
+/* Base Styles */
+:root {
+    --primary: #003c8f;
+    --secondary: #2358b5;
+    --accent: #62c1e8;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --danger: #dc3545;
+    --success: #28a745;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, rgba(98, 193, 232, 0.1), rgba(35, 88, 181, 0.8)), url('./images/incident_bg.jpg') center/cover no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 60, 143, 0.15);
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+h1 {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label {
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 15px;
+    margin-bottom: -12px;
+}
+
+input, textarea {
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(98, 193, 232, 0.3);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 60, 143, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.signup-link a {
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+#message {
+    text-align: center;
+    margin-top: 20px;
+    min-height: 24px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.header {
+    width: 90%;
+    max-width: 1200px;
+    height: 70px;
+    background-color: #002f6c;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+.logo {
+    display: block;
+    margin: 0 auto;
+    width: 70px;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#home-btn {
+    color:#ffffff;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: auto;
+    cursor: pointer;
+}
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    input, textarea {
+        padding: 12px 14px;
+    }
+}
