@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Incident Reports - PantherPath</title>
   <link rel="stylesheet" href="incidentfeed.css">
   <link rel="icon" href="logo.png" type="image/x-icon"/>
@@ -13,18 +13,6 @@
     <a href="mainScreen.html">
       <i class="fa-solid fa-house" id="home-btn"></i>
     </a>
-    <script>
-      document.getElementById("home-btn").addEventListener("click", function(event) {
-        event.preventDefault(); // Stop link from navigating immediately
-        const token = sessionStorage.getItem('token') || sessionStorage.getItem('token');
-        if (token) {
-          // Redirect to index or mainScreen
-          window.location.href = "mainScreen.html";
-        } else {
-          window.location.href = "index.html";
-        }
-      });
-    </script>
   </div>
   
   <div class="container">
@@ -71,6 +59,20 @@
 
     fetchReports(); // Load on page
   </script>
+
+      
+<script>
+  document.getElementById("home-btn").addEventListener("click", function(event) {
+    event.preventDefault(); // Stop link from navigating immediately
+    const token = sessionStorage.getItem('token') || sessionStorage.getItem('token');
+    if (token) {
+      // Redirect to index or mainScreen
+      window.location.href = "mainScreen.html";
+    } else {
+      window.location.href = "index.html";
+    }
+  });
+</script>
 
 </body>
 </html>
