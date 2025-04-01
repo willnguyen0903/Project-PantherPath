@@ -41,7 +41,7 @@
   </div>
 
   <script>
-    const token = sessionStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('token') || localStorage.getItem('token');
 
     if (!token) {
         alert("Please log in to access this page.");
