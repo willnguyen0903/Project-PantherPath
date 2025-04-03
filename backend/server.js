@@ -68,10 +68,13 @@ app.post('/login', async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        // Generate JWT Token
-        const token = jwt.sign({ userId: user.uid }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN
-        });
+        // generate token and ensure user id is included in token
+        const payload = { userId: user.uid }; 
+        console.log("Payload before signing token:", payload); // Debugging
+
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
+
+        console.log("Generated Token:", token); // Debugging
 
         res.json({ message: "Login successful!", token });
     } catch (error) {
@@ -83,26 +86,37 @@ app.post('/login', async (req, res) => {
 // JWT Middleware for Protected Routes
 const authenticateToken = (req, res, next) => {
     const authHeader = req.header('Authorization');
+    console.log("Received auth header:", authHeader);
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(403).json({ message: "Access denied. No token provided." });
     }
+
     const token = authHeader.split(' ')[1];
-    
+
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = decoded; // `req.user.uid` now exists
+        console.log("Decoded Token:", decoded); // Debugging
+
+        if (!decoded.userId) {
+            return res.status(400).json({ message: "Invalid token payload: missing userId" });
+        }
+
+        req.user = { userId: decoded.userId }; // Standardize to use userId everywhere
         next();
     } catch (error) {
-        res.status(401).json({ message: "Invalid token." });
+        console.error("JWT Verification Error:", error.message);
+        return res.status(401).json({ message: "Invalid token." });
     }
 };
+
 
 // Protected Profile Route (Fetches user by `uid`)
 app.get('/profile', authenticateToken, async (req, res) => {
     try {
-        const result = await pool.query("SELECT uid, username FROM users WHERE uid = $1", [req.user.uid]);
+        const result = await pool.query("SELECT uid, username FROM users WHERE uid = $1", 
+        [req.user.userId]
+        );
         if (result.rows.length === 0) return res.status(404).json({ message: "User not found" });
-
         res.json(result.rows[0]);
     } catch (error) {
         console.error("Profile fetch error:", error);
@@ -153,10 +167,10 @@ app.get('/incident-reports', async (req, res) => {
 });
 //upvote & downvote
 app.post('/incident-report/:id/vote', authenticateToken, async (req, res) => {
-    console.log("User Info:", req.user);  //debugging
     const { vote_type } = req.body; // 'upvote' or 'downvote'
-    const user_id = req.user.uid; // Correct field from JWT token
-    const report_id = req.params.report_id;
+    const user_id = req.user.userId; // Extract userId from decoded token
+    const report_id = req.params.id;
+
     if (!user_id) {
         return res.status(400).json({ message: "User ID missing" });
     }

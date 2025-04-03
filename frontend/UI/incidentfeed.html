@@ -48,7 +48,6 @@
 
     async function vote(reportId, type) {
       const token = sessionStorage.getItem('token') || localStorage.getItem('token');
-      console.log(token);
       if (!token) {
           alert("You need to be logged in to vote!");
           return;
