@@ -87,7 +87,7 @@ const authenticateToken = (req, res, next) => {
         return res.status(403).json({ message: "Access denied. No token provided." });
     }
     const token = authHeader.split(' ')[1];
-
+    
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded; // `req.user.uid` now exists
@@ -153,9 +153,13 @@ app.get('/incident-reports', async (req, res) => {
 });
 //upvote & downvote
 app.post('/incident-report/:id/vote', authenticateToken, async (req, res) => {
+    console.log("User Info:", req.user);  //debugging
     const { vote_type } = req.body; // 'upvote' or 'downvote'
     const user_id = req.user.uid; // Correct field from JWT token
     const report_id = req.params.report_id;
+    if (!user_id) {
+        return res.status(400).json({ message: "User ID missing" });
+    }
 
     try {
         // Check if user has already voted
