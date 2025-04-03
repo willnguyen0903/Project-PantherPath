@@ -152,23 +152,63 @@ app.get('/incident-reports', async (req, res) => {
     }
 });
 //upvote & downvote
-app.post('/incident-report/:id/upvote', async (req, res) => {
-    try {
-        await pool.query(`UPDATE incident_report SET upvotes = upvotes + 1 WHERE report_id = $1`, [req.params.id]);
-        res.json({ message: 'Upvoted successfully!' });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Upvote failed' });
-    }
-});
+app.post('/incident-report/:id/vote', authenticateToken, async (req, res) => {
+    const { vote_type } = req.body; // 'upvote' or 'downvote'
+    const user_id = req.user.uid; // Correct field from JWT token
+    const report_id = req.params.report_id;
 
-app.post('/incident-report/:id/downvote', async (req, res) => {
     try {
-        await pool.query(`UPDATE incident_report SET downvotes = downvotes + 1 WHERE report_id = $1`, [req.params.id]);
-        res.json({ message: 'Downvoted successfully!' });
+        // Check if user has already voted
+        const existingVote = await pool.query(
+            `SELECT vote_type FROM user_votes WHERE user_id = $1 AND report_id = $2`,
+            [user_id, report_id]
+        );
+
+        if (existingVote.rows.length > 0) {
+            const currentVote = existingVote.rows[0].vote_type;
+
+            if (currentVote === vote_type) {
+                return res.status(400).json({ message: `You have already ${vote_type}d this report.` });
+            } else {
+                // Swap upvote ↔ downvote
+                await pool.query(
+                    `UPDATE incident_report SET 
+                        upvotes = upvotes + CASE WHEN $1 = 'upvote' THEN 1 ELSE -1 END,
+                        downvotes = downvotes + CASE WHEN $1 = 'downvote' THEN 1 ELSE -1 END
+                     WHERE report_id = $2`,
+                    [vote_type, report_id]
+                );
+
+                await pool.query(
+                    `UPDATE user_votes SET vote_type = $1 WHERE user_id = $2 AND report_id = $3`,
+                    [vote_type, user_id, report_id]
+                );
+
+                return res.json({ message: `Your vote has been changed to ${vote_type}.` });
+            }
+        } else {
+            // New vote
+            await pool.query(
+                `INSERT INTO user_votes (user_id, report_id, vote_type) VALUES ($1, $2, $3)`,
+                [user_id, report_id, vote_type]
+            );
+
+            await pool.query(
+                `UPDATE incident_report SET 
+                    upvotes = upvotes + CASE WHEN $1 = 'upvote' THEN 1 ELSE 0 END,
+                    downvotes = downvotes + CASE WHEN $1 = 'downvote' THEN 1 ELSE 0 END
+                 WHERE report_id = $2`,
+                [vote_type, report_id]
+            );
+
+            return res.json({ message: `You have ${vote_type}d this report.` });
+        }
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Downvote failed' });
+        console.error('Vote error:', err);
+        res.status(500).json({ 
+            message: 'Failed to process vote',
+            error: err.message 
+        });
     }
 });
 

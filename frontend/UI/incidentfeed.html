@@ -47,15 +47,34 @@
     }
 
     async function vote(id, type) {
+      const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+      console.log(token);
+      if (!token) {
+          alert("You need to be logged in to vote!");
+          return;
+      }
+      
       try {
-        await fetch(`https://project-pantherpath.onrender.com/incident-report/${id}/${type}`, {
-          method: 'POST'
-        });
-        fetchReports(); // Refresh
+          const res = await fetch(`https://project-pantherpath.onrender.com/incident-report/${id}/vote`, {
+              method: 'POST',
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ vote_type: type })
+          });
+
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.message || 'Voting failed');
+          
+          alert(data.message);
+          fetchReports();
       } catch (err) {
-        console.error("Voting failed", err);
+          console.error("Voting failed", err);
+          alert(err.message || "Failed to submit vote. Please try again.");
       }
     }
+
 
     fetchReports(); // Load on page
   </script>
@@ -64,7 +83,7 @@
 <script>
   document.getElementById("home-btn").addEventListener("click", function(event) {
     event.preventDefault(); // Stop link from navigating immediately
-    const token = sessionStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('token') || localStorage.getItem('token');
     if (token) {
       // Redirect to index or mainScreen
       window.location.href = "mainScreen.html";
