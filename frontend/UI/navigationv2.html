@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PantherPath Navigation</title>
     <link rel="stylesheet" href="navigationv2.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="logo.png">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/x-icon" href="logo.png" />
     <script>
       function updateForm() {
         var transport = document.getElementById("transport").value;
@@ -64,21 +67,25 @@
         <i class="fa-solid fa-house" id="home-btn"></i>
       </a>
       <script>
-        document.getElementById("home-btn").addEventListener("click", function(event) {
-          event.preventDefault(); // Stop link from navigating immediately
-          const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-          if (token) {
-            // Redirect to index or mainScreen
-            window.location.href = "mainScreen.html";
-          } else {
-            window.location.href = "index.html";
-          }
-        });
+        document
+          .getElementById("home-btn")
+          .addEventListener("click", function (event) {
+            event.preventDefault(); // Stop link from navigating immediately
+            const token =
+              localStorage.getItem("token") || sessionStorage.getItem("token");
+            if (token) {
+              // Redirect to index or mainScreen
+              window.location.href = "mainScreen.html";
+            } else {
+              window.location.href = "index.html";
+            }
+          });
       </script>
     </div>
     <div class="container">
       <form onsubmit="event.preventDefault(); calculateAndDisplayRoute();">
         <h1>PantherPath Navigation</h1>
+
         <label for="startTime">Commute Start Time:</label>
         <input type="time" id="startTime" name="startTime" />
         <br /><br />
