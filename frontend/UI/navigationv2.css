@@ -186,7 +186,7 @@ button[type="submit"]:hover {
 }
 
 #home-btn {
-  color:#ffffff;
+  color: #ffffff;
   position: absolute;
   right: 5px;
   top: 50%;
@@ -194,4 +194,74 @@ button[type="submit"]:hover {
   width: 50px;
   height: auto;
   cursor: pointer;
+}
+
+#savedRoutesContainer {
+  width: 100%;
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: white;
+}
+
+.saved-route {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: rgba(0, 60, 143, 0.3);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.saved-route:hover {
+  background: rgba(0, 60, 143, 0.5);
+}
+
+.route-info {
+  flex: 1;
+}
+
+.route-info strong {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.route-details span {
+  display: block;
+  font-size: 0.9rem;
+  margin: 3px 0;
+  opacity: 0.8;
+}
+
+.route-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.route-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.route-actions .load-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.route-actions .delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.route-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

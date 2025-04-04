@@ -153,3 +153,303 @@ function displayGoogleMapsLink(link) {
   document.querySelector(".container").appendChild(linkContainer);
   console.log("Link displayed:", link);
 }
+
+// Check if user is logged in
+function isUserLoggedIn() {
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
+  return !!token;
+}
+
+// Save current route
+async function saveCurrentRoute() {
+  if (!isUserLoggedIn()) {
+    alert("Please log in to save routes");
+    return;
+  }
+
+  const routeName = prompt("Enter a name for this route:");
+  if (!routeName) return;
+
+  const transport = document.getElementById("transport").value;
+  const start = document.getElementById("startDestination").value;
+  const end = document.getElementById("finalDestination").value;
+
+  const waypoints = [];
+
+  // Collect waypoints based on current form state
+  if (transport === "Driving") {
+    const drivingType = document.querySelector(
+      'input[name="drivingType"]:checked'
+    )?.value;
+
+    if (drivingType === "ParkingDeck") {
+      const parkingDeck = document.getElementById("parkingDeck").value;
+      if (parkingDeck)
+        waypoints.push({ location: parkingDeck, stopover: true });
+    } else if (drivingType === "MartaStation") {
+      const martaStation = document.getElementById("martaStationPark").value;
+      if (martaStation)
+        waypoints.push({ location: martaStation, stopover: true });
+    }
+  } else if (transport === "Marta") {
+    const martaStart = document.getElementById("martaStationPark").value;
+    const martaEnd = document.getElementById("martaStationExit").value;
+    if (martaStart) waypoints.push({ location: martaStart, stopover: true });
+    if (martaEnd) waypoints.push({ location: martaEnd, stopover: true });
+  } else if (transport === "Walking") {
+    const walkingType = document.querySelector(
+      'input[name="walkingType"]:checked'
+    )?.value;
+    if (walkingType === "MartaStation") {
+      const martaStation = document.getElementById("martaStationWalk").value;
+      if (martaStation)
+        waypoints.push({ location: martaStation, stopover: true });
+    }
+  }
+
+  try {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    const response = await fetch(
+      "https://project-pantherpath.onrender.com/save-route",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          route_name: routeName,
+          start_location: start,
+          end_location: end,
+          transport_mode: transport,
+          waypoints: waypoints,
+        }),
+      }
+    );
+
+    const data = await response.json();
+    if (response.ok) {
+      alert("Route saved successfully!");
+      loadSavedRoutes(); // Refresh the list
+    } else {
+      alert(data.message || "Error saving route");
+    }
+  } catch (error) {
+    console.error("Error saving route:", error);
+    alert("Error saving route");
+  }
+}
+// Load saved routes
+async function loadSavedRoutes() {
+  if (!isUserLoggedIn()) return;
+
+  try {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    const response = await fetch(
+      "https://project-pantherpath.onrender.com/saved-routes",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    if (response.ok) {
+      displaySavedRoutes(data);
+    } else {
+      console.error("Error loading routes:", data.message);
+    }
+  } catch (error) {
+    console.error("Error loading routes:", error);
+  }
+}
+
+// Display saved routes in the UI
+function displaySavedRoutes(routes) {
+  const container = document.getElementById("savedRoutesContainer");
+  const list = document.getElementById("savedRoutesList");
+
+  container.style.display = "block";
+  list.innerHTML = "";
+
+  if (routes.length === 0) {
+    list.innerHTML =
+      '<p>No saved routes yet. Save your first route using the "Save Route" button.</p>';
+    return;
+  }
+
+  routes.forEach((route) => {
+    const routeElement = document.createElement("div");
+    routeElement.className = "saved-route";
+    routeElement.innerHTML = `
+      <div class="route-info">
+        <strong>${route.route_name}</strong>
+        <div class="route-details">
+          <span>From: ${route.start_location}</span>
+          <span>To: ${route.end_location}</span>
+          <span>Mode: ${route.transport_mode}</span>
+        </div>
+      </div>
+      <div class="route-actions">
+        <button class="load-btn" data-id="${route.route_id}">Load</button>
+        <button class="delete-btn" data-id="${route.route_id}">Delete</button>
+      </div>
+    `;
+    list.appendChild(routeElement);
+  });
+
+  // Add event listeners to all buttons
+  document.querySelectorAll(".load-btn").forEach((btn) => {
+    btn.addEventListener("click", () => loadRoute(btn.dataset.id));
+  });
+
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
+    btn.addEventListener("click", () => deleteRoute(btn.dataset.id));
+  });
+}
+
+// Create the saved routes container if it doesn't exist
+function createSavedRoutesContainer() {
+  const container = document.createElement("div");
+  container.id = "savedRoutesContainer";
+  document.querySelector(".container").appendChild(container);
+  return container;
+}
+
+// Load a specific route
+async function loadRoute(routeId) {
+  try {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    const response = await fetch(
+      `https://project-pantherpath.onrender.com/saved-routes/${routeId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const route = await response.json();
+    if (response.ok) {
+      // Populate basic fields
+      document.getElementById("transport").value = route.transport_mode;
+      document.getElementById("startDestination").value = route.start_location;
+
+      // Update form based on transport mode
+      updateForm();
+
+      // Set fields based on transport mode and waypoints
+      if (route.transport_mode === "Driving") {
+        // Determine driving type from waypoints
+        if (route.waypoints && route.waypoints.length > 0) {
+          const firstWaypoint = route.waypoints[0].location;
+
+          // Check if this is a parking deck or MARTA station
+          const isParkingDeck = firstWaypoint.includes("Parking Deck");
+          const drivingType = isParkingDeck ? "ParkingDeck" : "MartaStation";
+
+          // Set the radio button
+          document.querySelector(
+            `input[name="drivingType"][value="${drivingType}"]`
+          ).checked = true;
+          updateDrivingOptions();
+
+          if (isParkingDeck) {
+            document.getElementById("parkingDeck").value = firstWaypoint;
+          } else {
+            document.getElementById("martaStationPark").value = firstWaypoint;
+          }
+        }
+
+        // Set final destination
+        document.getElementById("finalDestination").value = route.end_location;
+      } else if (route.transport_mode === "Marta") {
+        if (route.waypoints && route.waypoints.length >= 2) {
+          document.getElementById("martaStationPark").value =
+            route.waypoints[0].location;
+          document.getElementById("martaStationExit").value =
+            route.waypoints[1].location;
+        }
+        document.getElementById("finalDestination").value = route.end_location;
+      } else if (route.transport_mode === "Walking") {
+        // Determine walking type from waypoints
+        if (route.waypoints && route.waypoints.length > 0) {
+          document.querySelector(
+            'input[name="walkingType"][value="MartaStation"]'
+          ).checked = true;
+          updateWalkingOptions();
+          document.getElementById("martaStationWalk").value =
+            route.waypoints[0].location;
+        } else {
+          document.querySelector(
+            'input[name="walkingType"][value="Campus"]'
+          ).checked = true;
+          updateWalkingOptions();
+        }
+        document.getElementById("finalDestination").value = route.end_location;
+      }
+
+      alert(`Route "${route.route_name}" loaded successfully`);
+    } else {
+      alert(route.message || "Error loading route");
+    }
+  } catch (error) {
+    console.error("Error loading route:", error);
+    alert("Error loading route");
+  }
+}
+
+// Delete a route
+async function deleteRoute(routeId) {
+  if (!confirm("Are you sure you want to delete this route?")) return;
+
+  try {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    const response = await fetch(
+      `https://project-pantherpath.onrender.com/saved-routes/${routeId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    if (response.ok) {
+      alert("Route deleted successfully");
+      loadSavedRoutes(); // Refresh the list
+    } else {
+      alert(data.message || "Error deleting route");
+    }
+  } catch (error) {
+    console.error("Error deleting route:", error);
+    alert("Error deleting route");
+  }
+}
+
+// Add save button to the form
+function addSaveButton() {
+  const form = document.querySelector("form");
+  const saveButton = document.createElement("button");
+  saveButton.type = "button";
+  saveButton.textContent = "Save Route";
+  saveButton.onclick = saveCurrentRoute;
+  form.appendChild(saveButton);
+}
+
+// Initialize saved routes functionality
+function initSavedRoutes() {
+  if (isUserLoggedIn()) {
+    addSaveButton();
+    loadSavedRoutes();
+  }
+}
+
+initSavedRoutes();
