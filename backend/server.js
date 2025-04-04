@@ -23,6 +23,12 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname)));
 
+// NavedN -- Testing if this fixes an issue
+app.use((req, res, next) => {
+  res.setHeader("Content-Type", "application/json");
+  next();
+});
+
 // Serve HTML file
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/UI/transitSchedule.html"));
@@ -286,6 +292,19 @@ app.post("/save-route", authenticateToken, async (req, res) => {
   } = req.body;
   const user_id = req.user.userId;
 
+  // Validation
+  if (!route_name || !start_location || !end_location || !transport_mode) {
+    return res.status(400).json({
+      message: "Missing required fields",
+      required: [
+        "route_name",
+        "start_location",
+        "end_location",
+        "transport_mode",
+      ],
+    });
+  }
+
   try {
     const result = await pool.query(
       `INSERT INTO saved_routes 
@@ -298,7 +317,7 @@ app.post("/save-route", authenticateToken, async (req, res) => {
         start_location,
         end_location,
         transport_mode,
-        waypoints,
+        waypoints ? JSON.stringify(waypoints) : null,
       ]
     );
 
@@ -307,8 +326,12 @@ app.post("/save-route", authenticateToken, async (req, res) => {
       route: result.rows[0],
     });
   } catch (err) {
-    console.error("Error saving route:", err);
-    res.status(500).json({ message: "Error saving route" });
+    console.error("Database error:", err.stack);
+    res.status(500).json({
+      message: "Error saving route",
+      error: err.message,
+      hint: "Check if waypoints is valid JSON array",
+    });
   }
 });
 
@@ -318,12 +341,13 @@ app.get("/saved-routes", authenticateToken, async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT * FROM saved_routes 
+      `SELECT route_id, route_name, start_location, 
+                end_location, transport_mode, created_at
+         FROM saved_routes 
          WHERE user_id = $1 
          ORDER BY created_at DESC`,
       [user_id]
     );
-
     res.json(result.rows);
   } catch (err) {
     console.error("Error fetching routes:", err);
@@ -354,6 +378,29 @@ app.delete("/saved-routes/:id", authenticateToken, async (req, res) => {
   } catch (err) {
     console.error("Error deleting route:", err);
     res.status(500).json({ message: "Error deleting route" });
+  }
+});
+
+// GET SINGLE ROUTE
+app.get("/saved-routes/:id", authenticateToken, async (req, res) => {
+  const route_id = req.params.id;
+  const user_id = req.user.userId;
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM saved_routes 
+         WHERE route_id = $1 AND user_id = $2`,
+      [route_id, user_id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Route not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Error fetching route:", err);
+    res.status(500).json({ message: "Error fetching route" });
   }
 });
 
