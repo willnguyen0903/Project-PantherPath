@@ -268,48 +268,73 @@ async function loadSavedRoutes() {
   }
 }
 
-// Display saved routes in the UI
 function displaySavedRoutes(routes) {
-  const container = document.getElementById("savedRoutesContainer");
-  const list = document.getElementById("savedRoutesList");
+  try {
+    // Create container if it doesn't exist
+    let container = document.getElementById("savedRoutesContainer");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "savedRoutesContainer";
+      container.style.display = "none";
+      container.innerHTML =
+        '<h3>Your Saved Routes</h3><div id="savedRoutesList"></div>';
+      document.querySelector(".container").appendChild(container);
+    }
 
-  container.style.display = "block";
-  list.innerHTML = "";
+    const list =
+      document.getElementById("savedRoutesList") ||
+      container.querySelector("#savedRoutesList") ||
+      document.createElement("div");
 
-  if (routes.length === 0) {
-    list.innerHTML =
-      '<p>No saved routes yet. Save your first route using the "Save Route" button.</p>';
-    return;
-  }
+    list.id = "savedRoutesList"; // Ensure it has the correct ID
+    list.innerHTML = ""; // Clear existing content
 
-  routes.forEach((route) => {
-    const routeElement = document.createElement("div");
-    routeElement.className = "saved-route";
-    routeElement.innerHTML = `
-      <div class="route-info">
-        <strong>${route.route_name}</strong>
-        <div class="route-details">
-          <span>From: ${route.start_location}</span>
-          <span>To: ${route.end_location}</span>
-          <span>Mode: ${route.transport_mode}</span>
+    if (!routes || routes.length === 0) {
+      list.innerHTML =
+        '<p>No saved routes found. Save your first route using the "Save Route" button.</p>';
+      container.style.display = "block";
+      return;
+    }
+
+    // Create route list items
+    routes.forEach((route) => {
+      const item = document.createElement("div");
+      item.className = "saved-route";
+      item.innerHTML = `
+        <div class="route-info">
+          <strong>${route.route_name}</strong>
+          <div class="route-details">
+            <span>From: ${route.start_location}</span>
+            <span>To: ${route.end_location}</span>
+            <span>Mode: ${route.transport_mode}</span>
+          </div>
         </div>
-      </div>
-      <div class="route-actions">
-        <button class="load-btn" data-id="${route.route_id}">Load</button>
-        <button class="delete-btn" data-id="${route.route_id}">Delete</button>
-      </div>
-    `;
-    list.appendChild(routeElement);
-  });
+        <div class="route-actions">
+          <button class="load-btn" data-id="${route.route_id}">Load</button>
+          <button class="delete-btn" data-id="${route.route_id}">Delete</button>
+        </div>
+      `;
+      list.appendChild(item);
+    });
 
-  // Add event listeners to all buttons
-  document.querySelectorAll(".load-btn").forEach((btn) => {
-    btn.addEventListener("click", () => loadRoute(btn.dataset.id));
-  });
+    // Add event listeners
+    document.querySelectorAll(".load-btn").forEach((btn) => {
+      btn.addEventListener("click", () => loadRoute(btn.dataset.id));
+    });
 
-  document.querySelectorAll(".delete-btn").forEach((btn) => {
-    btn.addEventListener("click", () => deleteRoute(btn.dataset.id));
-  });
+    document.querySelectorAll(".delete-btn").forEach((btn) => {
+      btn.addEventListener("click", () => deleteRoute(btn.dataset.id));
+    });
+
+    container.style.display = "block";
+  } catch (error) {
+    console.error("Error displaying routes:", error);
+    // Fallback: Create a temporary error message
+    const errorMsg = document.createElement("div");
+    errorMsg.textContent = "Error loading saved routes";
+    errorMsg.style.color = "red";
+    document.querySelector(".container").appendChild(errorMsg);
+  }
 }
 
 // Create the saved routes container if it doesn't exist
