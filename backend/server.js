@@ -135,22 +135,35 @@ app.get("/marta/schedule", async (req, res) => {
     }
 });
 // report incident
-app.post('/report-incident', async (req, res) => {
-    const { username, location, description } = req.body;
+app.post('/report-incident', authenticateToken, async (req, res) => {
+    const { location, description } = req.body;
+    const user_id = req.user.userId; // Get user ID from the authenticated token
   
     try {
+      // First get the username from the user_id
+      const userResult = await pool.query(
+        "SELECT username FROM users WHERE uid = $1",
+        [user_id]
+      );
+      
+      if (userResult.rows.length === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      const username = userResult.rows[0].username;
+      
       const result = await pool.query(`
-        INSERT INTO incident_report (username, location, description, upvotes, downvotes)
-        VALUES ($1, $2, $3, 0, 0)
+        INSERT INTO incident_report (user_id, username, location, description, upvotes, downvotes)
+        VALUES ($1, $2, $3, $4, 0, 0)
         RETURNING *;
-      `, [username, location, description]);
+      `, [user_id, username, location, description]);
   
       res.json({ message: 'Incident reported successfully!', report: result.rows[0] });
     } catch (err) {
       console.error('Error inserting incident:', err);
       res.status(500).json({ message: 'Error reporting incident.' });
     }
-});
+  });
 // fetch reports menu
 app.get('/incident-reports', async (req, res) => {
     try {
