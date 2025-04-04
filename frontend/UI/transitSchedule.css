@@ -96,3 +96,13 @@ transform: translate(-50%, -50%);
     height: auto;
     cursor: pointer;
 }
+
+.delay-red {
+    color: red;
+    font-weight: bold;
+}
+
+.delay-green {
+    color: greenyellow;
+    font-weight: bold;
+}

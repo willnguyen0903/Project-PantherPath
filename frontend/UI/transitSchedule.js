@@ -58,6 +58,21 @@ function populateStationDropdown(data) {
     });
 }
 
+function formatDelay(delay) {
+    if (!delay || !/^T\d+S$/.test(delay)) {
+        return 'No delay';
+    }
+
+    const totalSeconds = parseInt(delay.slice(1, -1), 10);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    if (minutes > 0) {
+        return `${minutes} minute${minutes > 1 ? 's' : ''} and ${seconds} second${seconds > 1 ? 's' : ''}`;
+    }
+    return `${seconds} second${seconds > 1 ? 's' : ''}`;
+}
+
 function displaySchedule(data) {
     const scheduleDiv = document.getElementById('schedule');
     scheduleDiv.innerHTML = '';
@@ -88,11 +103,15 @@ function displaySchedule(data) {
             hour12: true
         });
 
+        const delay = formatDelay(train.DELAY);
+        const delayClass = delay === 'No delay' || delay === '0 seconds' ? 'delay-green' : 'delay-red';
+
         const trainInfo = document.createElement('div');
         trainInfo.classList.add('train-box');
         trainInfo.innerHTML = `
             <p><strong>Destination:</strong> ${train.DESTINATION}</p>
             <p><strong>Arrival Time:</strong> ${formattedTime}</p>
+            <p><strong>Delay:</strong> <span class="${delayClass}">${delay}</span></p>
         `;
 
         trainInfo.style.animationDelay = `${index * 0.2}s`;
