@@ -59,7 +59,10 @@
       try {
         const response = await fetch('https://project-pantherpath.onrender.com/report-incident', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
           body: JSON.stringify({ username, location, description })
         });
 
