@@ -198,7 +198,7 @@ button[type="submit"]:hover {
 
 #savedRoutesContainer {
   width: 100%;
-  margin-top: 30px;
+  margin-top: 0px;
   padding: 20px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
@@ -264,4 +264,83 @@ button[type="submit"]:hover {
 .route-actions button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Styles */
+.delete-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete-modal-content {
+  background-color: #002f6c;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  color: white;
+  text-align: center;
+}
+
+.delete-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.delete-modal-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.delete-modal-btn.confirm {
+  background-color: #ff4444;
+  color: white;
+}
+
+.delete-modal-btn.cancel {
+  background-color: #62c1e8;
+  color: white;
+}
+
+.delete-modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Notification Styles */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 8px;
+  color: white;
+  background-color: #4caf50;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.notification.success {
+  background-color: #4caf50;
+}
+
+.notification.error {
+  background-color: #f44336;
 }

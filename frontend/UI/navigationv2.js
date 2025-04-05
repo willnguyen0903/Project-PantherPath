@@ -311,19 +311,24 @@ function displaySavedRoutes(routes) {
         </div>
         <div class="route-actions">
           <button class="load-btn" data-id="${route.route_id}">Load</button>
-          <button class="delete-btn" data-id="${route.route_id}">Delete</button>
+          <button class="delete-btn" data-id="${route.route_id}" data-name="${route.route_name}">Delete</button>
         </div>
       `;
       list.appendChild(item);
     });
-
     // Add event listeners
     document.querySelectorAll(".load-btn").forEach((btn) => {
       btn.addEventListener("click", () => loadRoute(btn.dataset.id));
     });
 
+    // Update event listeners for delete buttons
     document.querySelectorAll(".delete-btn").forEach((btn) => {
-      btn.addEventListener("click", () => deleteRoute(btn.dataset.id));
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const routeId = btn.dataset.id;
+        const routeName = btn.dataset.name;
+        showDeleteConfirmation(routeId, routeName);
+      });
     });
 
     container.style.display = "block";
@@ -429,34 +434,96 @@ async function loadRoute(routeId) {
   }
 }
 
-// Delete a route
-async function deleteRoute(routeId) {
-  if (!confirm("Are you sure you want to delete this route?")) return;
+// Delete Confirmation Modal
+function showDeleteConfirmation(routeId, routeName) {
+  const modal = document.createElement("div");
+  modal.className = "delete-modal";
+  modal.innerHTML = `
+    <div class="delete-modal-content">
+      <h3>Delete Route</h3>
+      <p>Are you sure you want to delete <strong>"${routeName}"</strong>?</p>
+      <p>This action cannot be undone.</p>
+      <div class="delete-modal-buttons">
+        <button class="delete-modal-btn cancel">Cancel</button>
+        <button class="delete-modal-btn confirm">Delete</button>
+      </div>
+    </div>
+  `;
 
-  try {
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
-    const response = await fetch(
-      `https://project-pantherpath.onrender.com/saved-routes/${routeId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const data = await response.json();
-    if (response.ok) {
-      alert("Route deleted successfully");
-      loadSavedRoutes(); // Refresh the list
-    } else {
-      alert(data.message || "Error deleting route");
+  // Add event listeners
+  modal.querySelector(".confirm").addEventListener("click", async () => {
+    modal.style.opacity = "0";
+    try {
+      await performRouteDeletion(routeId);
+      modal.remove();
+    } catch (error) {
+      modal.remove();
+      showErrorModal("Failed to delete route");
     }
-  } catch (error) {
-    console.error("Error deleting route:", error);
-    alert("Error deleting route");
+  });
+
+  modal.querySelector(".cancel").addEventListener("click", () => {
+    modal.style.opacity = "0";
+    setTimeout(() => modal.remove(), 300);
+  });
+
+  document.body.appendChild(modal);
+  setTimeout(() => (modal.style.opacity = "1"), 10);
+}
+
+// Actual deletion logic
+async function performRouteDeletion(routeId) {
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
+  const response = await fetch(
+    `https://project-pantherpath.onrender.com/saved-routes/${routeId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to delete route");
   }
+
+  // Show success notification
+  showSuccessNotification("Route deleted successfully");
+  loadSavedRoutes();
+}
+
+// Success Notification
+function showSuccessNotification(message) {
+  const notification = document.createElement("div");
+  notification.className = "notification success";
+  notification.textContent = message;
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.style.opacity = "0";
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
+// Error Modal
+function showErrorModal(message) {
+  const modal = document.createElement("div");
+  modal.className = "delete-modal";
+  modal.innerHTML = `
+    <div class="delete-modal-content">
+      <h3>Error</h3>
+      <p>${message}</p>
+      <button class="delete-modal-btn cancel" style="margin-top: 20px;">OK</button>
+    </div>
+  `;
+
+  modal.querySelector("button").addEventListener("click", () => {
+    modal.remove();
+  });
+
+  document.body.appendChild(modal);
 }
 
 // Add save button to the form
