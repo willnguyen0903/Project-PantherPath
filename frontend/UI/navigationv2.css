@@ -344,3 +344,49 @@ button[type="submit"]:hover {
 .notification.error {
   background-color: #f44336;
 }
+
+/* Save Route Button Section */
+button.save-route-btn {
+  background-color: #4caf50;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  margin-top: 10px;
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+button.save-route-btn:hover {
+  background-color: #3e8e41;
+  transform: translateY(-2px);
+}
+
+button.save-route-btn:active {
+  transform: translateY(0);
+}
+
+button.save-route-btn.loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin: -8px 0 0 -8px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

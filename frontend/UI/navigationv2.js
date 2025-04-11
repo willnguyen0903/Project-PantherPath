@@ -535,6 +535,7 @@ function addSaveButton() {
   const saveButton = document.createElement("button");
   saveButton.type = "button";
   saveButton.textContent = "Save Route";
+  saveButton.className = "save-route-btn";
   saveButton.onclick = saveCurrentRoute;
   form.appendChild(saveButton);
 }
