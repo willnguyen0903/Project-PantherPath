@@ -15,8 +15,8 @@ function initMap() {
 
   // Define the route with three points
   const routeWithWaypoints = {
-    origin: "6360 Jimmy Carter Blvd, Norcross, GA 30071", // Starting point
-    destination: "156 Heaton Park Dr, Atlanta, GA 30307", // Final destination
+    origin: "6360 Jimmy Carter Blvd, Norcross, GA 30071", // Test Starting point
+    destination: "156 Heaton Park Dr, Atlanta, GA 30307", // Test Final destination
     waypoints: [
       {
         location: "5660 Buford Hwy NE, Doraville, GA 30340", // Intermediate stop
