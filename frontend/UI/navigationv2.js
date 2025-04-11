@@ -15,8 +15,8 @@ function initMap() {
 
   // Define the route with three points
   const routeWithWaypoints = {
-    origin: "6360 Jimmy Carter Blvd, Norcross, GA 30071", // Starting point
-    destination: "156 Heaton Park Dr, Atlanta, GA 30307", // Final destination
+    origin: "6360 Jimmy Carter Blvd, Norcross, GA 30071", // Test Starting point
+    destination: "156 Heaton Park Dr, Atlanta, GA 30307", // Test Final destination
     waypoints: [
       {
         location: "5660 Buford Hwy NE, Doraville, GA 30340", // Intermediate stop
@@ -51,41 +51,39 @@ loadGoogleMapsScript();
 function calculateAndDisplayRoute() {
   console.log("Calculating route...");
   const start = document.getElementById("startDestination").value;
-  const end = document.getElementById("finalDestination").value;
-  console.log("Start:", start); // Debugging log
-  console.log("End:", end); // Debugging log
+  let end;
   const waypoints = [];
-
-  // Determine the travel mode based on user input
-  let travelMode = google.maps.TravelMode.DRIVING; // Default mode
   const transport = document.getElementById("transport").value;
+  let travelMode = google.maps.TravelMode.DRIVING;
 
-  if (transport === "Walking") {
-    travelMode = google.maps.TravelMode.WALKING;
-  } else if (transport === "Bicycling") {
+  if (transport === "Walking") travelMode = google.maps.TravelMode.WALKING;
+  else if (transport === "Bicycling")
     travelMode = google.maps.TravelMode.BICYCLING;
-  } else if (transport === "Transit") {
-    travelMode = google.maps.TravelMode.TRANSIT;
-  }
+  else if (transport === "Transit") travelMode = google.maps.TravelMode.TRANSIT;
 
-  // Collect waypoints based on user input
   if (transport === "Driving") {
     const drivingType = document.querySelector(
       'input[name="drivingType"]:checked'
     ).value;
     if (drivingType === "MartaStation") {
-      const martaStationPark =
-        document.getElementById("martaStationPark").value;
+      // Use the NEW ID for "Driving to a Marta Station"
+      const martaStationPark = document.getElementById(
+        "drivingMartaStationPark"
+      ).value;
       waypoints.push({ location: martaStationPark, stopover: true });
+      end = document.getElementById("drivingToMartaFinalDestination").value;
     } else if (drivingType === "ParkingDeck") {
       const parkingDeck = document.getElementById("parkingDeck").value;
       waypoints.push({ location: parkingDeck, stopover: true });
+      end = document.getElementById("parkingDeckFinalDestination").value;
     }
   } else if (transport === "Marta") {
+    // This is for "Initial Mode of Transport: Marta" (original ID)
     const martaStationPark = document.getElementById("martaStationPark").value;
     const martaStationExit = document.getElementById("martaStationExit").value;
     waypoints.push({ location: martaStationPark, stopover: true });
     waypoints.push({ location: martaStationExit, stopover: true });
+    end = document.getElementById("martaFinalDestination").value;
   } else if (transport === "Walking") {
     const walkingType = document.querySelector(
       'input[name="walkingType"]:checked'
@@ -94,30 +92,30 @@ function calculateAndDisplayRoute() {
       const martaStationWalk =
         document.getElementById("martaStationWalk").value;
       waypoints.push({ location: martaStationWalk, stopover: true });
+      end = document.getElementById("walkingToMartaFinalDestination").value;
+    } else if (walkingType === "Campus") {
+      end = document.getElementById("walkingFinalDestination").value;
     }
   }
+  console.log("End:", end); // Debugging log for testing
 
-  // Calculate the route
   directionsService.route(
     {
       origin: start,
       destination: end,
       waypoints: waypoints,
-      travelMode: travelMode, // Use the correct travel mode
+      travelMode: travelMode,
     },
     (response, status) => {
       if (status === "OK") {
-        // Display the route on the map
         directionsRenderer.setDirections(response);
-
-        // Generate a Google Maps link
         const googleMapsLink = generateGoogleMapsLink(
           start,
           end,
           waypoints,
           travelMode
         );
-        console.log("Google Maps Link:", googleMapsLink); // Debugging log
+        console.log("Google Maps Link:", googleMapsLink);
         displayGoogleMapsLink(googleMapsLink);
       } else {
         console.error("Directions request failed due to " + status);
@@ -161,7 +159,6 @@ function isUserLoggedIn() {
   return !!token;
 }
 
-// Save current route
 async function saveCurrentRoute() {
   if (!isUserLoggedIn()) {
     alert("Please log in to save routes");
@@ -173,30 +170,33 @@ async function saveCurrentRoute() {
 
   const transport = document.getElementById("transport").value;
   const start = document.getElementById("startDestination").value;
-  const end = document.getElementById("finalDestination").value;
-
+  let end;
   const waypoints = [];
 
-  // Collect waypoints based on current form state
   if (transport === "Driving") {
     const drivingType = document.querySelector(
       'input[name="drivingType"]:checked'
     )?.value;
-
     if (drivingType === "ParkingDeck") {
       const parkingDeck = document.getElementById("parkingDeck").value;
       if (parkingDeck)
         waypoints.push({ location: parkingDeck, stopover: true });
+      end = document.getElementById("parkingDeckFinalDestination").value;
     } else if (drivingType === "MartaStation") {
-      const martaStation = document.getElementById("martaStationPark").value;
+      // Use the NEW ID for "Driving to a Marta Station"
+      const martaStation = document.getElementById(
+        "drivingMartaStationPark"
+      ).value;
       if (martaStation)
         waypoints.push({ location: martaStation, stopover: true });
+      end = document.getElementById("drivingToMartaFinalDestination").value;
     }
   } else if (transport === "Marta") {
     const martaStart = document.getElementById("martaStationPark").value;
     const martaEnd = document.getElementById("martaStationExit").value;
     if (martaStart) waypoints.push({ location: martaStart, stopover: true });
     if (martaEnd) waypoints.push({ location: martaEnd, stopover: true });
+    end = document.getElementById("martaFinalDestination").value;
   } else if (transport === "Walking") {
     const walkingType = document.querySelector(
       'input[name="walkingType"]:checked'
@@ -205,9 +205,13 @@ async function saveCurrentRoute() {
       const martaStation = document.getElementById("martaStationWalk").value;
       if (martaStation)
         waypoints.push({ location: martaStation, stopover: true });
+      end = document.getElementById("walkingToMartaFinalDestination").value;
+    } else if (walkingType === "Campus") {
+      end = document.getElementById("walkingFinalDestination").value;
     }
   }
 
+  // Rest of the function remains the same...
   try {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
@@ -232,7 +236,7 @@ async function saveCurrentRoute() {
     const data = await response.json();
     if (response.ok) {
       alert("Route saved successfully!");
-      loadSavedRoutes(); // Refresh the list
+      loadSavedRoutes();
     } else {
       alert(data.message || "Error saving route");
     }
@@ -241,6 +245,7 @@ async function saveCurrentRoute() {
     alert("Error saving route");
   }
 }
+
 // Load saved routes
 async function loadSavedRoutes() {
   if (!isUserLoggedIn()) return;
@@ -366,24 +371,16 @@ async function loadRoute(routeId) {
 
     const route = await response.json();
     if (response.ok) {
-      // Populate basic fields
       document.getElementById("transport").value = route.transport_mode;
       document.getElementById("startDestination").value = route.start_location;
-
-      // Update form based on transport mode
       updateForm();
 
-      // Set fields based on transport mode and waypoints
       if (route.transport_mode === "Driving") {
-        // Determine driving type from waypoints
         if (route.waypoints && route.waypoints.length > 0) {
           const firstWaypoint = route.waypoints[0].location;
-
-          // Check if this is a parking deck or MARTA station
           const isParkingDeck = firstWaypoint.includes("Parking Deck");
           const drivingType = isParkingDeck ? "ParkingDeck" : "MartaStation";
 
-          // Set the radio button
           document.querySelector(
             `input[name="drivingType"][value="${drivingType}"]`
           ).checked = true;
@@ -391,13 +388,16 @@ async function loadRoute(routeId) {
 
           if (isParkingDeck) {
             document.getElementById("parkingDeck").value = firstWaypoint;
+            document.getElementById("parkingDeckFinalDestination").value =
+              route.end_location;
           } else {
-            document.getElementById("martaStationPark").value = firstWaypoint;
+            // Use the NEW ID for "Driving to a Marta Station"
+            document.getElementById("drivingMartaStationPark").value =
+              firstWaypoint;
+            document.getElementById("drivingToMartaFinalDestination").value =
+              route.end_location;
           }
         }
-
-        // Set final destination
-        document.getElementById("finalDestination").value = route.end_location;
       } else if (route.transport_mode === "Marta") {
         if (route.waypoints && route.waypoints.length >= 2) {
           document.getElementById("martaStationPark").value =
@@ -405,9 +405,9 @@ async function loadRoute(routeId) {
           document.getElementById("martaStationExit").value =
             route.waypoints[1].location;
         }
-        document.getElementById("finalDestination").value = route.end_location;
+        document.getElementById("martaFinalDestination").value =
+          route.end_location;
       } else if (route.transport_mode === "Walking") {
-        // Determine walking type from waypoints
         if (route.waypoints && route.waypoints.length > 0) {
           document.querySelector(
             'input[name="walkingType"][value="MartaStation"]'
@@ -415,13 +415,16 @@ async function loadRoute(routeId) {
           updateWalkingOptions();
           document.getElementById("martaStationWalk").value =
             route.waypoints[0].location;
+          document.getElementById("walkingToMartaFinalDestination").value =
+            route.end_location;
         } else {
           document.querySelector(
             'input[name="walkingType"][value="Campus"]'
           ).checked = true;
           updateWalkingOptions();
+          document.getElementById("walkingFinalDestination").value =
+            route.end_location;
         }
-        document.getElementById("finalDestination").value = route.end_location;
       }
 
       alert(`Route "${route.route_name}" loaded successfully`);

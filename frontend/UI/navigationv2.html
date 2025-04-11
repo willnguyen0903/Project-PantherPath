@@ -116,9 +116,9 @@
         <br /><br />
 
         <div id="drivingOptions" style="display: none">
-          <label>Take Highways?</label>
+          <!-- <label>Take Highways?</label> 
           <input type="radio" name="highway" value="Yes" /> Yes
-          <input type="radio" name="highway" value="No" /> No <br /><br />
+          <input type="radio" name="highway" value="No" /> No <br /><br /> -->
 
           <label>I am:</label>
           <input
@@ -142,10 +142,149 @@
             >Which Marta Station are you starting at:</label
           >
           <select id="martaStationPark" name="martaStationPark">
+            <option value="Airport, 6000 S Terminal Pkwy, Atlanta, GA 30337">
+              Airport Marta
+            </option>
+            <option value="Arts Center, Atlanta, GA 30309">
+              Arts Center Marta
+            </option>
+            <option value="Ashby, 65 Joseph E Lowery Blvd, Atlanta, GA 30314">
+              Ashby Marta
+            </option>
+            <option
+              value="Avondale, 915 E Ponce de Leon Ave, Decatur, GA 30030"
+            >
+              Avondale Marta
+            </option>
+            <option
+              value="Bankhead, 1335 Donald Hollowell Pkwy, Atlanta, GA 30318"
+            >
+              Bankhead Marta
+            </option>
+            <option
+              value="Brookhaven / Oglethorpe, 4047 Peachtree Rd NE, Atlanta, GA 30319"
+            >
+              Brookhaven-Oglethorpe Marta
+            </option>
+            <option
+              value="Buckhead Station, 3495 Buckhead Loop NE, Atlanta, GA 30326"
+            >
+              Buckhead Marta
+            </option>
+            <option value="Chamblee, 5200 New Peachtree Rd, Chamblee, GA 30341">
+              Chamblee Marta
+            </option>
+            <option value="MARTA, 435 W Peachtree St NW, Atlanta, GA 30308">
+              Civic Center Marta
+            </option>
+            <option
+              value="College Park MARTA Train Station, 3800 E Main St, College Park, GA 30337"
+            >
+              College Park Marta
+            </option>
+            <option value="Decatur, 400 Church St, Decatur, GA 30030">
+              Decatur Marta
+            </option>
             <option value="6000 New Peachtree Rd, Doraville, GA 30340">
               Doraville Marta
             </option>
-            <option value="Dunwoody">Dunwoody Marta</option>
+            <option value="Dunwoody MARTA Station, Dunwoody, GA 30346">
+              Dunwoody Marta
+            </option>
+            <option value="East Lake, 2260 College Avenue, Atlanta, GA 30307">
+              East Lake Marta
+            </option>
+            <option value="East Point, 2848 E Main St, East Point, GA 30344">
+              East Point Marta
+            </option>
+            <option value="Edgewood-Candler Park Station, Atlanta, GA 30307">
+              Edgewood-Candler Park Station
+            </option>
+            <option value="Five Points Station, Atlanta, GA 30303">
+              Five Points Marta
+            </option>
+            <option value="Garnett, Atlanta, GA 30303">Garnett Marta</option>
+            <option
+              value="Georgia State Marta Station, 170 Piedmont Ave SE, Atlanta, GA 30303"
+            >
+              Georgia State Marta
+            </option>
+            <option
+              value="GWCC/CNN Center, 100 Centennial Olympic Park Dr NW, Atlanta, GA 30303"
+            >
+              GWCC/CNN Center Marta
+            </option>
+
+            <option
+              value="Hamilton E. Holmes, 70 Hamilton E Holmes Dr NW, Atlanta, GA 30311"
+            >
+              Hamilton E. Holmes Marta
+            </option>
+            <option value="Inman Park / Reynoldstown, Atlanta, GA 30307">
+              Inman Park / Reynoldstown Marta
+            </option>
+            <option
+              value="Indian Creek, 3901 Durham Park Rd, Stone Mountain, GA 30083"
+            >
+              Indian Creek
+            </option>
+            <option value="Kensington Station, Georgia 30032">
+              Kensington Station
+            </option>
+            <option
+              value="King Memorial, 377 Decatur St SE & Grant Street, Atlanta, GA 30312"
+            >
+              King Memorial Marta
+            </option>
+            <option
+              value="Lakewood/Ft. McPherson, 2020 Lee St SW, Atlanta, GA 30310"
+            >
+              Lakewood/Ft. McPherson Marta
+            </option>
+            <option
+              value="Lenox, 955 East Paces Ferry Rd NE, Atlanta, GA 30326"
+            >
+              Lenox Marta
+            </option>
+            <option
+              value="Lindbergh Center, 2424 Piedmont Rd NE, Atlanta, GA 30324"
+            >
+              Lindbergh Marta
+            </option>
+            <option
+              value="Medical Center, 5711 Peachtree-Dunwoody Road Northeast, Atlanta, GA 30342"
+            >
+              Medical Center Marta
+            </option>
+            <option value="Midtown, Atlanta, GA 30309">Midtown Marta</option>
+            <option value="North Ave, 713 W Peachtree St NW, Atlanta, GA 30308">
+              North Avenue Marta
+            </option>
+            <option
+              value="North Springs, 7010 Peachtree Dunwoody Rd, Sandy Springs, GA 30328"
+            >
+              North Springs Marta
+            </option>
+            <option value="Oakland City, Atlanta, GA 30310">
+              Oakland City Marta
+            </option>
+            <option value="Peachtree Center, Atlanta, GA">
+              Peachtree Center Marta
+            </option>
+            <option
+              value="Sandy Springs, Perimeter Center W, Sandy Springs, GA 30328"
+            >
+              Sandy Springs Marta
+            </option>
+            <option value="Vine City, 502 Rhodes St NW, Atlanta, GA 30314">
+              Vine City Marta
+            </option>
+            <option value="West End Station, Atlanta, GA 30310">
+              West End Marta
+            </option>
+            <option value="West Lake, Atlanta, GA 30318">
+              West Lake Marta
+            </option>
           </select>
           <br /><br />
 
@@ -161,12 +300,24 @@
           <br /><br />
 
           <label for="finalDestination">Final Destination:</label>
-          <select id="finalDestination" name="finalDestination">
+          <select id="martaFinalDestination" name="finalDestination">
+            <option value="25 Park Place, 25 Park Pl NE, Atlanta, GA 30303">
+              25 Park Place
+            </option>
+            <option value="60 Luckie St NW, Atlanta, GA 30303">
+              Aderhold Learning Center GSU
+            </option>
             <option value="95 Decatur St. SE, Atlanta, GA 30303">
               Classroom South
             </option>
+            <option value="100 Decatur St. SE, Atlanta, GA 30303">
+              Georgia State University Library
+            </option>
             <option value="38 Peachtree Center Ave SE, Atlanta, GA 30303">
               Langdale Hall
+            </option>
+            <option value="140 Decatur St. SE, Atlanta, GA 30303">
+              Urban Life Building
             </option>
           </select>
         </div>
@@ -190,53 +341,223 @@
 
           <div id="finalDestinationContainer" style="display: none">
             <label for="finalDestination">Final Destination:</label>
-            <select id="finalDestination" name="finalDestination">
+            <select id="walkingFinalDestination" name="finalDestination">
+              <option value="25 Park Place, 25 Park Pl NE, Atlanta, GA 30303">
+                25 Park Place
+              </option>
+              <option value="60 Luckie St NW, Atlanta, GA 30303">
+                Aderhold Learning Center GSU
+              </option>
               <option value="95 Decatur St. SE, Atlanta, GA 30303">
                 Classroom South
               </option>
+              <option value="100 Decatur St. SE, Atlanta, GA 30303">
+                Georgia State University Library
+              </option>
               <option value="38 Peachtree Center Ave SE, Atlanta, GA 30303">
                 Langdale Hall
+              </option>
+              <option value="140 Decatur St. SE, Atlanta, GA 30303">
+                Urban Life Building
               </option>
             </select>
           </div>
         </div>
 
         <div id="parkingDeckOptions" style="display: none">
-          <label>Auto-fill Closest Parking Deck?</label>
+          <!-- <label>Auto-fill Closest Parking Deck?</label>
           <input type="radio" name="autoFill" value="Yes" /> Yes
-          <input type="radio" name="autoFill" value="No" /> No <br /><br />
+          <input type="radio" name="autoFill" value="No" /> No <br /><br /> -->
 
           <label for="parkingDeck">Which Parking Deck:</label>
           <select id="parkingDeck" name="parkingDeck">
+            <option value="52 Decatur St SE Atlanta, GA 30303">
+              G Parking Deck
+            </option>
             <option value="99 Gilmer Street">K Parking Deck</option>
-            <option value="Green">Green Parking Deck</option>
+            <option value="99 Gilmer Street">N Parking Deck</option>
+            <option value="99 Gilmer Street">S Parking Deck</option>
+            <option value="43 Auburn Ave NE, Atlanta, GA 30303">
+              T Parking Deck
+            </option>
           </select>
           <br /><br />
 
           <label for="finalDestination">Final Destination:</label>
-          <select id="finalDestination" name="finalDestination">
+          <select id="parkingDeckFinalDestination" name="finalDestination">
+            <option value="25 Park Place, 25 Park Pl NE, Atlanta, GA 30303">
+              25 Park Place
+            </option>
+            <option value="60 Luckie St NW, Atlanta, GA 30303">
+              Aderhold Learning Center GSU
+            </option>
             <option value="95 Decatur St. SE, Atlanta, GA 30303">
               Classroom South
             </option>
+            <option value="100 Decatur St. SE, Atlanta, GA 30303">
+              Georgia State University Library
+            </option>
             <option value="38 Peachtree Center Ave SE, Atlanta, GA 30303">
               Langdale Hall
+            </option>
+            <option value="140 Decatur St. SE, Atlanta, GA 30303">
+              Urban Life Building
             </option>
           </select>
         </div>
 
         <div id="martaStationOptions" style="display: none">
-          <label>Auto-fill Closest Marta Station with Parking?</label>
+          <!-- <label>Auto-fill Closest Marta Station with Parking?</label>
           <input type="radio" name="martaAutoFill" value="Yes" /> Yes
-          <input type="radio" name="martaAutoFill" value="No" /> No <br /><br />
+          <input type="radio" name="martaAutoFill" value="No" /> No <br /><br /> -->
 
           <label for="martaStationPark"
-            >Which Marta Station are you parking at:</label
+            >Which Marta Station are you parking/being dropped off at:</label
           >
-          <select id="martaStationPark" name="martaStationPark">
+          <select id="drivingMartaStationPark" name="martaStationPark">
+            <option value="Airport, 6000 S Terminal Pkwy, Atlanta, GA 30337">
+              Airport Marta
+            </option>
+            <option value="Arts Center, Atlanta, GA 30309">
+              Arts Center Marta
+            </option>
+            <option value="Ashby, 65 Joseph E Lowery Blvd, Atlanta, GA 30314">
+              Ashby Marta
+            </option>
+            <option
+              value="Avondale, 915 E Ponce de Leon Ave, Decatur, GA 30030"
+            >
+              Avondale Marta
+            </option>
+            <option
+              value="Bankhead, 1335 Donald Hollowell Pkwy, Atlanta, GA 30318"
+            >
+              Bankhead Marta
+            </option>
+            <option
+              value="Brookhaven / Oglethorpe, 4047 Peachtree Rd NE, Atlanta, GA 30319"
+            >
+              Brookhaven-Oglethorpe Marta
+            </option>
+            <option
+              value="Buckhead Station, 3495 Buckhead Loop NE, Atlanta, GA 30326"
+            >
+              Buckhead Marta
+            </option>
+            <option value="Chamblee, 5200 New Peachtree Rd, Chamblee, GA 30341">
+              Chamblee Marta
+            </option>
+            <option value="MARTA, 435 W Peachtree St NW, Atlanta, GA 30308">
+              Civic Center Marta
+            </option>
+            <option
+              value="College Park MARTA Train Station, 3800 E Main St, College Park, GA 30337"
+            >
+              College Park Marta
+            </option>
+            <option value="Decatur, 400 Church St, Decatur, GA 30030">
+              Decatur Marta
+            </option>
             <option value="6000 New Peachtree Rd, Doraville, GA 30340">
               Doraville Marta
             </option>
-            <option value="Dunwoody">Dunwoody Marta</option>
+            <option value="Dunwoody MARTA Station, Dunwoody, GA 30346">
+              Dunwoody Marta
+            </option>
+            <option value="East Lake, 2260 College Avenue, Atlanta, GA 30307">
+              East Lake Marta
+            </option>
+            <option value="East Point, 2848 E Main St, East Point, GA 30344">
+              East Point Marta
+            </option>
+            <option value="Edgewood-Candler Park Station, Atlanta, GA 30307">
+              Edgewood-Candler Park Station
+            </option>
+            <option value="Five Points Station, Atlanta, GA 30303">
+              Five Points Marta
+            </option>
+            <option value="Garnett, Atlanta, GA 30303">Garnett Marta</option>
+            <option
+              value="Georgia State Marta Station, 170 Piedmont Ave SE, Atlanta, GA 30303"
+            >
+              Georgia State Marta
+            </option>
+            <option
+              value="GWCC/CNN Center, 100 Centennial Olympic Park Dr NW, Atlanta, GA 30303"
+            >
+              GWCC/CNN Center Marta
+            </option>
+
+            <option
+              value="Hamilton E. Holmes, 70 Hamilton E Holmes Dr NW, Atlanta, GA 30311"
+            >
+              Hamilton E. Holmes Marta
+            </option>
+            <option value="Inman Park / Reynoldstown, Atlanta, GA 30307">
+              Inman Park / Reynoldstown Marta
+            </option>
+            <option
+              value="Indian Creek, 3901 Durham Park Rd, Stone Mountain, GA 30083"
+            >
+              Indian Creek
+            </option>
+            <option value="Kensington Station, Georgia 30032">
+              Kensington Station
+            </option>
+            <option
+              value="King Memorial, 377 Decatur St SE & Grant Street, Atlanta, GA 30312"
+            >
+              King Memorial Marta
+            </option>
+            <option
+              value="Lakewood/Ft. McPherson, 2020 Lee St SW, Atlanta, GA 30310"
+            >
+              Lakewood/Ft. McPherson Marta
+            </option>
+            <option
+              value="Lenox, 955 East Paces Ferry Rd NE, Atlanta, GA 30326"
+            >
+              Lenox Marta
+            </option>
+            <option
+              value="Lindbergh Center, 2424 Piedmont Rd NE, Atlanta, GA 30324"
+            >
+              Lindbergh Marta
+            </option>
+            <option
+              value="Medical Center, 5711 Peachtree-Dunwoody Road Northeast, Atlanta, GA 30342"
+            >
+              Medical Center Marta
+            </option>
+            <option value="Midtown, Atlanta, GA 30309">Midtown Marta</option>
+            <option value="North Ave, 713 W Peachtree St NW, Atlanta, GA 30308">
+              North Avenue Marta
+            </option>
+            <option
+              value="North Springs, 7010 Peachtree Dunwoody Rd, Sandy Springs, GA 30328"
+            >
+              North Springs Marta
+            </option>
+            <option value="Oakland City, Atlanta, GA 30310">
+              Oakland City Marta
+            </option>
+            <option value="Peachtree Center, Atlanta, GA">
+              Peachtree Center Marta
+            </option>
+            <option
+              value="Sandy Springs, Perimeter Center W, Sandy Springs, GA 30328"
+            >
+              Sandy Springs Marta
+            </option>
+            <option value="Vine City, 502 Rhodes St NW, Atlanta, GA 30314">
+              Vine City Marta
+            </option>
+            <option value="West End Station, Atlanta, GA 30310">
+              West End Marta
+            </option>
+            <option value="West Lake, Atlanta, GA 30318">
+              West Lake Marta
+            </option>
           </select>
           <br /><br />
 
@@ -247,44 +568,214 @@
             <option value="30 Alabama St SW, Atlanta, GA 30303">
               Five Points Marta
             </option>
-            <option value="Peachtree Center">Peachtree Center Marta</option>
+            <option value="Peachtree Center, Atlanta, GA">
+              Peachtree Center Marta
+            </option>
+            <option
+              value="Georgia State Marta Station, 170 Piedmont Ave SE, Atlanta, GA 30303"
+            >
+              Georgia State Marta
+            </option>
           </select>
           <br /><br />
 
           <label for="finalDestination">Final Destination:</label>
-          <select id="finalDestination" name="finalDestination">
+          <select id="drivingToMartaFinalDestination" name="finalDestination">
+            <option value="25 Park Place, 25 Park Pl NE, Atlanta, GA 30303">
+              25 Park Place
+            </option>
+            <option value="60 Luckie St NW, Atlanta, GA 30303">
+              Aderhold Learning Center GSU
+            </option>
             <option value="95 Decatur St. SE, Atlanta, GA 30303">
               Classroom South
             </option>
+            <option value="100 Decatur St. SE, Atlanta, GA 30303">
+              Georgia State University Library
+            </option>
             <option value="38 Peachtree Center Ave SE, Atlanta, GA 30303">
               Langdale Hall
+            </option>
+            <option value="140 Decatur St. SE, Atlanta, GA 30303">
+              Urban Life Building
             </option>
           </select>
         </div>
 
         <div id="walkingMartaOptions" style="display: none">
-          <label>Auto-fill Closest Marta Station?</label>
+          <!-- <label>Auto-fill Closest Marta Station?</label>
           <input type="radio" name="martaAutoFill" value="Yes" /> Yes
-          <input type="radio" name="martaAutoFill" value="No" /> No <br /><br />
+          <input type="radio" name="martaAutoFill" value="No" /> No <br /><br /> -->
 
           <label for="martaStationWalk"
             >Which Marta Station are you walking to:</label
           >
           <select id="martaStationWalk" name="martaStationWalk">
+            <option value="Airport, 6000 S Terminal Pkwy, Atlanta, GA 30337">
+              Airport Marta
+            </option>
+            <option value="Arts Center, Atlanta, GA 30309">
+              Arts Center Marta
+            </option>
+            <option value="Ashby, 65 Joseph E Lowery Blvd, Atlanta, GA 30314">
+              Ashby Marta
+            </option>
+            <option
+              value="Avondale, 915 E Ponce de Leon Ave, Decatur, GA 30030"
+            >
+              Avondale Marta
+            </option>
+            <option
+              value="Bankhead, 1335 Donald Hollowell Pkwy, Atlanta, GA 30318"
+            >
+              Bankhead Marta
+            </option>
+            <option
+              value="Brookhaven / Oglethorpe, 4047 Peachtree Rd NE, Atlanta, GA 30319"
+            >
+              Brookhaven-Oglethorpe Marta
+            </option>
+            <option
+              value="Buckhead Station, 3495 Buckhead Loop NE, Atlanta, GA 30326"
+            >
+              Buckhead Marta
+            </option>
+            <option value="Chamblee, 5200 New Peachtree Rd, Chamblee, GA 30341">
+              Chamblee Marta
+            </option>
+            <option value="MARTA, 435 W Peachtree St NW, Atlanta, GA 30308">
+              Civic Center Marta
+            </option>
+            <option
+              value="College Park MARTA Train Station, 3800 E Main St, College Park, GA 30337"
+            >
+              College Park Marta
+            </option>
+            <option value="Decatur, 400 Church St, Decatur, GA 30030">
+              Decatur Marta
+            </option>
             <option value="6000 New Peachtree Rd, Doraville, GA 30340">
               Doraville Marta
             </option>
-            <option value="Dunwoody">Dunwoody Marta</option>
+            <option value="Dunwoody MARTA Station, Dunwoody, GA 30346">
+              Dunwoody Marta
+            </option>
+            <option value="East Lake, 2260 College Avenue, Atlanta, GA 30307">
+              East Lake Marta
+            </option>
+            <option value="East Point, 2848 E Main St, East Point, GA 30344">
+              East Point Marta
+            </option>
+            <option value="Edgewood-Candler Park Station, Atlanta, GA 30307">
+              Edgewood-Candler Park Station
+            </option>
+            <option value="Five Points Station, Atlanta, GA 30303">
+              Five Points Marta
+            </option>
+            <option value="Garnett, Atlanta, GA 30303">Garnett Marta</option>
+            <option
+              value="Georgia State Marta Station, 170 Piedmont Ave SE, Atlanta, GA 30303"
+            >
+              Georgia State Marta
+            </option>
+            <option
+              value="GWCC/CNN Center, 100 Centennial Olympic Park Dr NW, Atlanta, GA 30303"
+            >
+              GWCC/CNN Center Marta
+            </option>
+
+            <option
+              value="Hamilton E. Holmes, 70 Hamilton E Holmes Dr NW, Atlanta, GA 30311"
+            >
+              Hamilton E. Holmes Marta
+            </option>
+            <option value="Inman Park / Reynoldstown, Atlanta, GA 30307">
+              Inman Park / Reynoldstown Marta
+            </option>
+            <option
+              value="Indian Creek, 3901 Durham Park Rd, Stone Mountain, GA 30083"
+            >
+              Indian Creek
+            </option>
+            <option value="Kensington Station, Georgia 30032">
+              Kensington Station
+            </option>
+            <option
+              value="King Memorial, 377 Decatur St SE & Grant Street, Atlanta, GA 30312"
+            >
+              King Memorial Marta
+            </option>
+            <option
+              value="Lakewood/Ft. McPherson, 2020 Lee St SW, Atlanta, GA 30310"
+            >
+              Lakewood/Ft. McPherson Marta
+            </option>
+            <option
+              value="Lenox, 955 East Paces Ferry Rd NE, Atlanta, GA 30326"
+            >
+              Lenox Marta
+            </option>
+            <option
+              value="Lindbergh Center, 2424 Piedmont Rd NE, Atlanta, GA 30324"
+            >
+              Lindbergh Marta
+            </option>
+            <option
+              value="Medical Center, 5711 Peachtree-Dunwoody Road Northeast, Atlanta, GA 30342"
+            >
+              Medical Center Marta
+            </option>
+            <option value="Midtown, Atlanta, GA 30309">Midtown Marta</option>
+            <option value="North Ave, 713 W Peachtree St NW, Atlanta, GA 30308">
+              North Avenue Marta
+            </option>
+            <option
+              value="North Springs, 7010 Peachtree Dunwoody Rd, Sandy Springs, GA 30328"
+            >
+              North Springs Marta
+            </option>
+            <option value="Oakland City, Atlanta, GA 30310">
+              Oakland City Marta
+            </option>
+            <option value="Peachtree Center, Atlanta, GA">
+              Peachtree Center Marta
+            </option>
+            <option
+              value="Sandy Springs, Perimeter Center W, Sandy Springs, GA 30328"
+            >
+              Sandy Springs Marta
+            </option>
+            <option value="Vine City, 502 Rhodes St NW, Atlanta, GA 30314">
+              Vine City Marta
+            </option>
+            <option value="West End Station, Atlanta, GA 30310">
+              West End Marta
+            </option>
+            <option value="West Lake, Atlanta, GA 30318">
+              West Lake Marta
+            </option>
           </select>
           <br /><br />
 
           <label for="finalDestination">Final Destination:</label>
-          <select id="finalDestination" name="finalDestination">
+          <select id="walkingToMartaFinalDestination" name="finalDestination">
+            <option value="25 Park Place, 25 Park Pl NE, Atlanta, GA 30303">
+              25 Park Place
+            </option>
+            <option value="60 Luckie St NW, Atlanta, GA 30303">
+              Aderhold Learning Center GSU
+            </option>
             <option value="95 Decatur St. SE, Atlanta, GA 30303">
               Classroom South
             </option>
+            <option value="100 Decatur St. SE, Atlanta, GA 30303">
+              Georgia State University Library
+            </option>
             <option value="38 Peachtree Center Ave SE, Atlanta, GA 30303">
               Langdale Hall
+            </option>
+            <option value="140 Decatur St. SE, Atlanta, GA 30303">
+              Urban Life Building
             </option>
           </select>
         </div>
