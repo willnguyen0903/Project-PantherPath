@@ -68,9 +68,9 @@ function formatDelay(delay) {
     const seconds = totalSeconds % 60;
 
     if (minutes > 0) {
-        return `${minutes} minute${minutes > 1 ? 's' : ''} and ${seconds} second${seconds > 1 ? 's' : ''}`;
+        return `${minutes} minute${minutes > 1 ? 's' : ''} and ${seconds} second${seconds !== 1 ? 's' : ''}`;
     }
-    return `${seconds} second${seconds > 1 ? 's' : ''}`;
+    return `${seconds} second${seconds !== 1 ? 's' : ''}`;
 }
 
 function displaySchedule(data) {
