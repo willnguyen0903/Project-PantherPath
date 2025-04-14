@@ -1,7 +1,8 @@
 html, body {
     height: 100%;
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 body {
@@ -138,6 +139,7 @@ body {
     font-family: "Times New Roman", Times, serif;
     opacity: 0;
     animation: fadeInFromBelow 0.8s ease-out forwards;
+    max-height: 660px;
 }
 
 .custom-button:nth-child(1) {
@@ -175,7 +177,50 @@ body {
     }
 }
 
+
+.logout-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.tweet-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    animation: fadeInFromBelow 0.5s ease-out forwards;
+  }
+  
+.twitter-tweet {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+  
+  
 @media (max-width: 768px) {
+    .main-content {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      height: 100%;
+    }
+  
+    .tweet-container {
+      height: 60%;
+    }
+  
+    .buttons-wrapper {
+      width: 90%;
+    }
+
+    .vertical-line {
+        width: 60%;           
+        height: 2px;          
+        margin: 0px;   
+    }
     .heading-container {
         max-width: 60%;
         margin-left: 10px;
@@ -185,18 +230,11 @@ body {
         font-size: 28px;
         line-height: 1.3;
     }
-
-    .vertical-line {
-        height: 20%;
-    }
-
     .buttons-wrapper {
         max-width: 90%;
     }
+    .buttons-container {
+        width: 80%;
+    }
 }
-
-.logout-icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}
+  
