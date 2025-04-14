@@ -358,82 +358,77 @@ function createSavedRoutesContainer() {
 // Load a specific route
 async function loadRoute(routeId) {
   try {
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
-    const response = await fetch(
-      `https://project-pantherpath.onrender.com/saved-routes/${routeId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+      const response = await fetch(`https://project-pantherpath.onrender.com/saved-routes/${routeId}`, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+      });
 
-    const route = await response.json();
-    if (response.ok) {
-      document.getElementById("transport").value = route.transport_mode;
-      document.getElementById("startDestination").value = route.start_location;
-      updateForm();
+      const route = await response.json();
+      if (response.ok) {
+          // Sets transport mode
+          document.getElementById("transport").value = route.transport_mode;
+          document.getElementById("startDestination").value = route.start_location;
+          updateForm();
 
-      if (route.transport_mode === "Driving") {
-        if (route.waypoints && route.waypoints.length > 0) {
-          const firstWaypoint = route.waypoints[0].location;
-          const isParkingDeck = firstWaypoint.includes("Parking Deck");
-          const drivingType = isParkingDeck ? "ParkingDeck" : "MartaStation";
 
-          document.querySelector(
-            `input[name="drivingType"][value="${drivingType}"]`
-          ).checked = true;
-          updateDrivingOptions();
+          // Handle transport modes
+          if (route.transport_mode === "Driving") {
+              if (route.waypoints && route.waypoints.length > 0) {
+                  const firstWaypoint = route.waypoints[0].location;
+                  console.log("Route Data:", route);
+                  console.log("First Waypoint:", firstWaypoint);
 
-          if (isParkingDeck) {
-            document.getElementById("parkingDeck").value = firstWaypoint;
-            document.getElementById("parkingDeckFinalDestination").value =
-              route.end_location;
-          } else {
-            // Use the NEW ID for "Driving to a Marta Station"
-            document.getElementById("drivingMartaStationPark").value =
-              firstWaypoint;
-            document.getElementById("drivingToMartaFinalDestination").value =
-              route.end_location;
+                  // Reset all radio buttons for drivingType
+                  document.querySelectorAll('input[name="drivingType"]').forEach(radio => {
+                    radio.checked = false;
+                  });
+                  const parkingDeckAddresses=["43 Auburn Ave NE, Atlanta, GA 30303","52 Decatur St SE Atlanta, GA 30303","99 Gilmer Street"]
+
+                  if (parkingDeckAddresses.includes(route.waypoints[0].location)) {
+                      console.log("Setting drivingType: ParkingDeck"); 
+                      document.querySelector('input[name="drivingType"][value="ParkingDeck"]').checked = true;
+                      updateDrivingOptions();
+
+                      document.getElementById("parkingDeck").value = firstWaypoint;
+                      document.getElementById("parkingDeckFinalDestination").value = route.end_location;
+                  } else {
+                      console.log("Setting drivingType: MartaStation");
+                      document.querySelector('input[name="drivingType"][value="MartaStation"]').checked = true;
+                      updateDrivingOptions();
+
+                      document.getElementById("drivingMartaStationPark").value = firstWaypoint;
+                      document.getElementById("drivingToMartaFinalDestination").value = route.end_location;
+                  }
+              }
+          } else if (route.transport_mode === "Marta") {
+              if (route.waypoints && route.waypoints.length >= 2) {
+                  document.getElementById("martaStationPark").value = route.waypoints[0].location;
+                  document.getElementById("martaStationExit").value = route.waypoints[1].location;
+              }
+              document.getElementById("martaFinalDestination").value = route.end_location;
+          } else if (route.transport_mode === "Walking") {
+              if (route.waypoints && route.waypoints.length > 0) {
+                  document.querySelector('input[name="walkingType"][value="MartaStation"]').checked = true;
+                  updateWalkingOptions();
+                  document.getElementById("martaStationWalk").value = route.waypoints[0].location;
+                  document.getElementById("walkingToMartaFinalDestination").value = route.end_location;
+              } else {
+                  document.querySelector('input[name="walkingType"][value="Campus"]').checked = true;
+                  updateWalkingOptions();
+                  document.getElementById("walkingFinalDestination").value = route.end_location;
+              }
           }
-        }
-      } else if (route.transport_mode === "Marta") {
-        if (route.waypoints && route.waypoints.length >= 2) {
-          document.getElementById("martaStationPark").value =
-            route.waypoints[0].location;
-          document.getElementById("martaStationExit").value =
-            route.waypoints[1].location;
-        }
-        document.getElementById("martaFinalDestination").value =
-          route.end_location;
-      } else if (route.transport_mode === "Walking") {
-        if (route.waypoints && route.waypoints.length > 0) {
-          document.querySelector(
-            'input[name="walkingType"][value="MartaStation"]'
-          ).checked = true;
-          updateWalkingOptions();
-          document.getElementById("martaStationWalk").value =
-            route.waypoints[0].location;
-          document.getElementById("walkingToMartaFinalDestination").value =
-            route.end_location;
-        } else {
-          document.querySelector(
-            'input[name="walkingType"][value="Campus"]'
-          ).checked = true;
-          updateWalkingOptions();
-          document.getElementById("walkingFinalDestination").value =
-            route.end_location;
-        }
-      }
 
-      alert(`Route "${route.route_name}" loaded successfully`);
-    } else {
-      alert(route.message || "Error loading route");
-    }
+          // Confirm route was loaded
+          alert(`Route "${route.route_name}" loaded successfully`);
+      } else {
+          alert(route.message || "Error loading route");
+      }
   } catch (error) {
-    console.error("Error loading route:", error);
-    alert("Error loading route");
+      console.error("Error loading route:", error);
+      alert("Error loading route");
   }
 }
 

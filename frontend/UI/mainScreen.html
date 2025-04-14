@@ -15,8 +15,8 @@
             <a href="#" id="logout-btn">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </a>
-              
-        </div>
+
+    </div>
     <script>
         const token = localStorage.getItem('token') || sessionStorage.getItem('token');
 
@@ -26,11 +26,11 @@
         }
         document.getElementById("logout-btn").addEventListener("click", function(event) {
           event.preventDefault(); // Stop link from navigating immediately
-      
+
           // Remove token
           localStorage.removeItem('token');
           sessionStorage.removeItem('token'); // Just in case
-      
+
           // Redirect to login or home
           window.location.href = "index.html";
         });
