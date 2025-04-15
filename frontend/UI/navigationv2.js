@@ -384,7 +384,8 @@ async function loadRoute(routeId) {
                   document.querySelectorAll('input[name="drivingType"]').forEach(radio => {
                     radio.checked = false;
                   });
-                  const parkingDeckAddresses=["43 Auburn Ave NE, Atlanta, GA 30303","52 Decatur St SE Atlanta, GA 30303","99 Gilmer Street"]
+                  const parkingDeckAddresses=["43 Auburn Ave NE, Atlanta, GA 30303","52 Decatur St SE Atlanta, GA 30303","99 Gilmer Street"];
+
 
                   if (parkingDeckAddresses.includes(route.waypoints[0].location)) {
                       console.log("Setting drivingType: ParkingDeck"); 
@@ -431,6 +432,9 @@ async function loadRoute(routeId) {
       alert("Error loading route");
   }
 }
+
+
+
 
 // Delete Confirmation Modal
 function showDeleteConfirmation(routeId, routeName) {
