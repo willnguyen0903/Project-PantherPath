@@ -25,7 +25,9 @@ PantherPath simplifies the process of commuting to GSU’s campus for its users.
 - **Incident Report**: File an incident report pertaining to commuting procedures to be displayed.
 
 ---
-## Link to App
+## Link
 https://pantherpath-deploy.onrender.com/
+
+---
 
 Thank you for choosing PantherPath to navigate your commute to GSU with ease!🐆
