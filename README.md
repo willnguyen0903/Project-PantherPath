@@ -6,6 +6,8 @@ Welcome to **Panther-Path**, the ultimate mobile navigation app built specifical
 ## Purpose
 PantherPath simplifies the process of commuting to GSU’s campus for its users. The app significantly reduces the inconvenience of utilizing multiple apps to plan a journey to campus .
 
+---
+
 ## Team Members
 - Steven Tran
 - Will Nguygen
